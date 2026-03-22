@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MathBattle - Victory Results</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600&amp;family=Lexend:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#0053dc",
+              "inverse-surface": "#0b0f10",
+              "primary-dim": "#0049c2",
+              "on-background": "#2c3437",
+              "on-tertiary-container": "#54436b",
+              "inverse-primary": "#618bff",
+              "on-error-container": "#6e0a12",
+              "primary-fixed": "#3e76fe",
+              "on-secondary-container": "#435368",
+              "secondary-fixed-dim": "#c5d6f0",
+              "secondary": "#506076",
+              "on-secondary": "#f7f9ff",
+              "background": "#f7f9fb",
+              "surface-container-lowest": "#ffffff",
+              "on-primary-container": "#000000",
+              "error": "#a83836",
+              "on-surface-variant": "#596064",
+              "tertiary-fixed-dim": "#d6c0f1",
+              "surface": "#f7f9fb",
+              "secondary-fixed": "#d3e4fe",
+              "on-secondary-fixed-variant": "#4d5d73",
+              "error-container": "#fa746f",
+              "on-error": "#fff7f6",
+              "on-tertiary-fixed-variant": "#5d4d75",
+              "outline": "#747c80",
+              "tertiary": "#685781",
+              "on-tertiary": "#fef7ff",
+              "surface-dim": "#d4dbdf",
+              "primary-container": "#3e76fe",
+              "surface-container-high": "#e3e9ed",
+              "outline-variant": "#acb3b7",
+              "surface-container": "#eaeff2",
+              "surface-tint": "#0053dc",
+              "on-tertiary-fixed": "#403157",
+              "primary-fixed-dim": "#2d68f0",
+              "surface-container-highest": "#dce4e8",
+              "secondary-dim": "#44546a",
+              "tertiary-fixed": "#e4ceff",
+              "on-surface": "#2c3437",
+              "tertiary-dim": "#5c4b74",
+              "surface-container-low": "#f0f4f7",
+              "on-primary": "#faf8ff",
+              "inverse-on-surface": "#9a9d9f",
+              "tertiary-container": "#e4ceff",
+              "surface-bright": "#f7f9fb",
+              "on-primary-fixed": "#ffffff",
+              "error-dim": "#67040d",
+              "on-secondary-fixed": "#314055",
+              "surface-variant": "#dce4e8",
+              "secondary-container": "#d3e4fe",
+              "on-primary-fixed-variant": "#f9f7ff"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Lexend"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(10, minmax(0, 1fr));
+            gap: 4px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="bg-[#f7f9fb] dark:bg-slate-900 fixed top-0 w-full z-50">
+<div class="flex justify-between items-center w-full px-6 py-4 max-w-screen-xl mx-auto">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="User profile avatar silhouette with soft blue background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbq5eQiwl2ZJZGRQAfl523Mz9MuEoXAzeuRhZNHjtngg3JLke7ybSSfPV50XGNkWsSvGK---1-hFVSVtLJvyraJAqXiuPIedkG5_WfaZWl_jWVDxIo9vTWbFq122ncjI1cv-upGpEONFZdYZVlv-7_Qn8xgq-0b1YXJrKlR7SiYiQoTDS9wIgrDxAp4BFJ4oyDQ2UUCuuS_-Ht45fbP9ZsiRiVGMTC50t5IzCNGJn1G-_3AyViGLg-PhbcWejXfKZashet-lK7sdo"/>
+</div>
+<span class="text-xl font-extrabold text-[#0053dc] dark:text-blue-400 font-headline tracking-tight">MathBattle</span>
+</div>
+<div class="text-[#0053dc] dark:text-blue-400 font-headline font-bold tracking-tight">
+                Lvl 24 • 1,250 XP
+            </div>
+</div>
+</header>
+<main class="max-w-screen-xl mx-auto px-6 pt-24 space-y-8">
+<!-- Victory Hero Section -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+<div class="lg:col-span-7 bg-surface-container-lowest rounded-3xl p-8 flex flex-col justify-center relative overflow-hidden">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -mr-20 -mt-20 blur-3xl"></div>
+<div class="relative z-10">
+<div class="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full font-label text-sm mb-6">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+                        MISSION COMPLETE
+                    </div>
+<h1 class="font-headline text-5xl font-extrabold text-on-surface mb-4 tracking-tight">VICTORY</h1>
+<p class="text-on-surface-variant text-lg max-w-md mb-8">You conquered the 100-Question Gauntlet. The Algebra Behemoth has been slain!</p>
+<div class="flex items-center gap-6">
+<div class="flex flex-col">
+<span class="font-label text-xs text-outline tracking-widest uppercase">XP EARNED</span>
+<span class="font-headline text-3xl font-bold text-primary">+450 XP</span>
+</div>
+<div class="w-px h-10 bg-surface-container-highest"></div>
+<div class="flex flex-col">
+<span class="font-label text-xs text-outline tracking-widest uppercase">ACCURACY</span>
+<span class="font-headline text-3xl font-bold text-on-surface">94%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Monster Slain Status & Level Progress -->
+<div class="lg:col-span-5 space-y-6">
+<div class="bg-primary bg-gradient-to-br from-primary to-primary-container rounded-3xl p-8 text-on-primary shadow-[0_20px_40px_rgba(0,83,220,0.1)] flex flex-col items-center text-center">
+<div class="w-32 h-32 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-6xl" style="font-variation-settings: 'FILL' 1;">skull</span>
+</div>
+<h3 class="font-headline text-2xl font-bold mb-1">Monster Slain!</h3>
+<p class="font-body text-white/80 text-sm mb-6">Level 24 Algebra Behemoth Defeated</p>
+<div class="w-full bg-white/10 rounded-full h-3 overflow-hidden mb-2">
+<div class="bg-white h-full w-4/5 rounded-full"></div>
+</div>
+<div class="flex justify-between w-full text-xs font-label">
+<span>LVL 24</span>
+<span>800 / 1000 XP TO LVL 25</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Accuracy Matrix Section -->
+<section class="bg-surface-container-low rounded-3xl p-8">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h2 class="font-headline text-2xl font-bold text-on-surface">Accuracy Matrix</h2>
+<p class="text-on-surface-variant text-sm">Visual breakdown of your 100-question performance</p>
+</div>
+<div class="flex gap-4">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded bg-primary"></div>
+<span class="text-xs font-label text-outline">Correct</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded bg-error-container"></div>
+<span class="text-xs font-label text-outline">Missed</span>
+</div>
+</div>
+</div>
+<div class="matrix-grid">
+<!-- Row 1 -->
+<div class="aspect-square bg-primary rounded-md"></div>
+<div class="aspect-square bg-primary rounded-md"></div>
+<div class="aspect-square bg-primary rounded-md"></div>
+<div class="aspect-square bg-error-container rounded-md"></div>
+<div class="aspect-square bg-primary rounded-md"></div>
+<div class="aspect-square bg-primary rounded-md"></div>
+<div class="aspect-square bg-primary rounded-md"></div>
+<div class="aspect-square bg-primary rounded-md"></div>
+<div class="aspect-square bg-primary rounded-md"></div>
+<div class="aspect-square bg-primary rounded-md"></div>
+<!-- Row 2 -->
+<div class="aspect-square bg-primary rounded-md"></div>
+<div class="aspect-square bg-primary rounded-md"></div>
+<div class="aspect-square bg-primary rounded-md"></div>
+<div class="aspect-square bg-primary rounded-md"></div>
+<div class="aspect-square bg-primary rounded-md"></div>
+<div class="aspect-square bg-primary rounded-md"></div>
+<div class="aspect-square bg-error-container rounded-md"></div>
+<div class="aspect-square bg-primary rounded-md"></div>
+<div class="aspect-square bg-primary rounded-md"></div>
+<div class="aspect-square bg-primary rounded-md"></div>
+<!-- Row 3-10 Simulating rest -->
+<div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div>
+<div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-error-container rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div>
+<div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div>
+<div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-error-container rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div>
+<div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div>
+<div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-error-container rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div>
+<div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div>
+<div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-error-container rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div>
+</div>
+</section>
+<!-- Review Errors Section -->
+<section class="space-y-6">
+<h2 class="font-headline text-2xl font-bold text-on-surface">Review Errors</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Error Card 1 -->
+<div class="bg-surface-container-lowest rounded-3xl p-6 flex items-center justify-between group hover:bg-surface-container transition-colors">
+<div class="space-y-1">
+<span class="font-label text-xs text-error font-medium">Question #4</span>
+<div class="font-headline text-2xl font-bold">14 x 7 = <span class="text-error-container">?</span></div>
+</div>
+<div class="flex items-center gap-4">
+<div class="text-right hidden sm:block">
+<span class="block text-xs font-label text-outline">Your Answer</span>
+<span class="font-headline text-lg font-bold text-on-surface-variant">88</span>
+</div>
+<button class="w-12 h-12 rounded-2xl bg-primary-container text-on-primary flex items-center justify-center hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</div>
+<!-- Error Card 2 -->
+<div class="bg-surface-container-lowest rounded-3xl p-6 flex items-center justify-between group hover:bg-surface-container transition-colors">
+<div class="space-y-1">
+<span class="font-label text-xs text-error font-medium">Question #17</span>
+<div class="font-headline text-2xl font-bold">423 ÷ 9 = <span class="text-error-container">?</span></div>
+</div>
+<div class="flex items-center gap-4">
+<div class="text-right hidden sm:block">
+<span class="block text-xs font-label text-outline">Your Answer</span>
+<span class="font-headline text-lg font-bold text-on-surface-variant">45</span>
+</div>
+<button class="w-12 h-12 rounded-2xl bg-primary-container text-on-primary flex items-center justify-center hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Action Buttons -->
+<section class="flex flex-col sm:flex-row gap-4 pt-4">
+<button class="flex-1 h-16 rounded-2xl bg-primary bg-gradient-to-r from-primary to-primary-container text-white font-headline font-bold text-lg flex items-center justify-center gap-3 shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">replay</span>
+                Restart Challenge
+            </button>
+<button class="flex-1 h-16 rounded-2xl bg-surface-container-high text-on-surface font-headline font-bold text-lg flex items-center justify-center gap-3 hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined">analytics</span>
+                View History
+            </button>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 rounded-t-3xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border-t border-slate-100 dark:border-slate-800 shadow-[0_-10px_30px_rgba(0,83,220,0.04)] pb-6 pt-3 px-4 flex justify-around items-center">
+<div class="flex flex-col items-center justify-center bg-[#0053dc] text-white rounded-2xl px-6 py-2 transition-all duration-300">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calculate</span>
+<span class="font-['Lexend'] text-[12px] font-medium">Practice</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-6 py-2 hover:text-[#0053dc] dark:hover:text-blue-300">
+<span class="material-symbols-outlined">history</span>
+<span class="font-['Lexend'] text-[12px] font-medium">History</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-6 py-2 hover:text-[#0053dc] dark:hover:text-blue-300">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['Lexend'] text-[12px] font-medium">Settings</span>
+</div>
+</nav>
+</body></html>
