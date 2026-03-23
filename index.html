@@ -1,869 +1,660 @@
 <!DOCTYPE html>
-<html class="light" lang="ja">
+<html lang="ja">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
-    <meta name="theme-color" content="#f7f9fb"/>
-    <title>MathBattle - 冒険・学び・成長</title>
-    
-    <!-- PWA Manifest (Data URI) -->
+    <meta name="theme-color" content="#fff8f0"/>
+    <title>MathBattle - まほうの計算バトル</title>
     <link rel="manifest" id="manifest-link" href=""/>
-    <!-- SVG Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
-    
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600&family=Lexend:wght@400;500;600&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    
-    <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "primary": "#0053dc", "inverse-surface": "#0b0f10", "on-background": "#2c3437",
-              "error": "#a83836", "error-container": "#fa746f", "on-error-container": "#6e0a12",
-              "surface": "#f7f9fb", "surface-container-lowest": "#ffffff",
-              "surface-container-low": "#f0f4f7", "surface-container-high": "#e3e9ed",
-              "outline": "#747c80", "outline-variant": "#acb3b7", "primary-container": "#3e76fe"
-            },
-            fontFamily: { "headline": ["Manrope"], "body": ["Plus Jakarta Sans"], "label": ["Lexend"] },
-            spacing: { "safe-bottom": "env(safe-area-inset-bottom)" },
-            animation: {
-                'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
-                'attack': 'attack 0.3s ease-in-out',
-                'damage': 'damage 0.4s ease-out'
-            },
-            keyframes: {
-                shake: { '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' }, '20%, 80%': { transform: 'translate3d(2px, 0, 0)' }, '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' }, '40%, 60%': { transform: 'translate3d(4px, 0, 0)' } },
-                attack: { '0%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px) scale(1.1)' }, '100%': { transform: 'translateY(0)' } },
-                damage: { '0%': { filter: 'brightness(1) sepia(0)' }, '50%': { filter: 'brightness(0.5) sepia(1) hue-rotate(-50deg) saturate(5)' }, '100%': { filter: 'brightness(1) sepia(0)' } }
-            }
-          }
-        }
-      }
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=M+PLUS+Rounded+1c:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <script>
+      tailwind.config={theme:{extend:{
+        colors:{cream:'#fff8f0',rose:'#e8788a','rose-light':'#fce8ec',mint:'#5bbfb5','mint-light':'#e0f5f1',amber:'#f5c542','amber-light':'#fef6dc',ocean:'#5b9fd6','ocean-light':'#e0eef9',plum:'#9b7fd4','plum-light':'#ede4f7',bark:'#3d2c2c','bark-light':'#6b5c5c',sand:'#f0e6d8',pebble:'#c4b5a5'},
+        fontFamily:{sans:['"M PLUS Rounded 1c"','sans-serif'],display:['"Zen Maru Gothic"','sans-serif']},
+        animation:{'float':'float 3s ease-in-out infinite','shake':'shake .45s cubic-bezier(.36,.07,.19,.97) both','attack':'attack .35s ease-in-out','hit-flash':'hitFlash .35s ease-out','dmg-pop':'dmgPop 1s ease-out forwards','combo-in':'comboIn .4s cubic-bezier(.34,1.56,.64,1)','bounce-in':'bounceIn .6s cubic-bezier(.34,1.56,.64,1)','gauge-shine':'gaugeShine 2s linear infinite','star-earn':'starEarn .6s cubic-bezier(.34,1.56,.64,1)'},
+        keyframes:{float:{'0%,100%':{transform:'translateY(0)'},'50%':{transform:'translateY(-8px)'}},shake:{'10%,90%':{transform:'translate3d(-2px,0,0)'},'20%,80%':{transform:'translate3d(3px,0,0)'},'30%,50%,70%':{transform:'translate3d(-5px,0,0)'},'40%,60%':{transform:'translate3d(5px,0,0)'}},attack:{'0%':{transform:'translateY(0) scale(1)'},'40%':{transform:'translateY(-25px) scale(1.15)'},'100%':{transform:'translateY(0) scale(1)'}},hitFlash:{'0%':{filter:'brightness(1)'},'30%':{filter:'brightness(2.5) saturate(0)'},'100%':{filter:'brightness(1)'}},dmgPop:{'0%':{transform:'translateY(0) scale(1)',opacity:'1'},'50%':{transform:'translateY(-35px) scale(1.4)',opacity:'1'},'100%':{transform:'translateY(-55px) scale(.7)',opacity:'0'}},comboIn:{'0%':{transform:'scale(.3)',opacity:'0'},'100%':{transform:'scale(1)',opacity:'1'}},bounceIn:{'0%':{transform:'scale(0)',opacity:'0'},'60%':{transform:'scale(1.1)'},'100%':{transform:'scale(1)',opacity:'1'}},gaugeShine:{'0%':{backgroundPosition:'-200% 0'},'100%':{backgroundPosition:'200% 0'}},starEarn:{'0%':{transform:'scale(0) rotate(-30deg)',opacity:'0'},'60%':{transform:'scale(1.3) rotate(10deg)'},'100%':{transform:'scale(1) rotate(0)',opacity:'1'}}}
+      }}}
     </script>
     <style>
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-        .matrix-grid { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; }
-        body { min-height: max(884px, 100dvh); -webkit-tap-highlight-color: transparent; }
-        .view { display: none; opacity: 0; transition: opacity 0.3s ease; }
-        .view.active { display: block; opacity: 1; }
-        .touch-target { min-width: 48px; min-height: 48px; }
-        /* 電卓キーパッド用 */
-        .numpad-btn { background: #ffffff; border-radius: 12px; font-size: 1.5rem; font-weight: 700; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); display: flex; align-items: center; justify-content: center; user-select: none; transition: transform 0.1s, background 0.2s; }
-        .numpad-btn:active { transform: scale(0.95); background: #eaeff2; }
-        .flash-red { animation: damage 0.4s; }
-        .monster-sprite { font-size: 5rem; line-height: 1; display: inline-block; transition: all 0.3s; }
+        *,*::before,*::after{box-sizing:border-box}
+        body{background:#fff8f0;-webkit-tap-highlight-color:transparent}
+        .view{display:none;opacity:0;transition:opacity .35s ease}.view.active{display:block;opacity:1}
+        .bg-storybook{background:linear-gradient(180deg,#fff8f0 0%,#fce8ec 50%,#e0f5f1 100%);background-attachment:fixed}
+        .pattern-dots{background-image:radial-gradient(circle,#e8788a12 1px,transparent 1px);background-size:24px 24px}
+        .card{background:white;border-radius:1.5rem;box-shadow:0 2px 16px rgba(61,44,44,.06),0 0 0 1px rgba(61,44,44,.03)}
+        .card-glow{box-shadow:0 4px 24px rgba(232,120,138,.15),0 0 0 1px rgba(232,120,138,.08)}
+        .numpad-btn{background:white;border-radius:1rem;font-size:1.4rem;font-weight:700;box-shadow:0 3px 0 #e8ddd0,0 4px 12px rgba(61,44,44,.08);display:flex;align-items:center;justify-content:center;user-select:none;transition:transform .08s,box-shadow .08s;color:#3d2c2c;font-family:'Zen Maru Gothic',sans-serif}
+        .numpad-btn:active{transform:translateY(2px);box-shadow:0 1px 0 #e8ddd0,0 2px 6px rgba(61,44,44,.06)}
+        .gauge-track{height:22px;border-radius:11px;background:linear-gradient(135deg,#f0e6d8,#e8ddd0);box-shadow:inset 0 2px 4px rgba(61,44,44,.12);overflow:hidden;position:relative}
+        .gauge-fill{height:100%;border-radius:11px;transition:width .4s cubic-bezier(.4,0,.2,1);position:relative}
+        .gauge-fill::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);background-size:200% 100%;animation:gaugeShine 2s linear infinite}
+        .gauge-low{background:linear-gradient(90deg,#f87171,#fb923c)}.gauge-mid{background:linear-gradient(90deg,#fbbf24,#f59e0b)}.gauge-high{background:linear-gradient(90deg,#5bbfb5,#34d399)}.gauge-max{background:linear-gradient(90deg,#e8788a,#f5c542,#5bbfb5);background-size:200% 100%}
+        .hp-track{height:10px;border-radius:5px;background:#f0e6d8;overflow:hidden}
+        .hp-fill{height:100%;border-radius:5px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+        .dmg-popup{position:absolute;pointer-events:none;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;animation:dmgPop 1s ease-out forwards;z-index:100;text-shadow:0 2px 4px rgba(0,0,0,.15)}
+        .monster-sprite{font-size:4.5rem;line-height:1;display:inline-block;transition:all .3s;filter:drop-shadow(0 4px 12px rgba(61,44,44,.15))}
+        .monster-glow{background:radial-gradient(circle,rgba(245,197,66,.15) 0%,transparent 70%)}
+        .monster-card{transition:transform .25s,box-shadow .25s}
+        .monster-card:hover{transform:translateY(-6px);box-shadow:0 12px 32px rgba(61,44,44,.1)}
+        .monster-card.undiscovered .sprite-wrap{filter:brightness(0) saturate(0);opacity:.2}
+        .matrix-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:3px}
+        .nav-pill{border-radius:1rem;transition:all .25s}
+        .nav-pill.active{background:linear-gradient(135deg,#e8788a,#f5c542);color:white;box-shadow:0 2px 12px rgba(232,120,138,.3)}
+        .touch-target{min-width:44px;min-height:44px}
+        /* Stars */
+        .star{display:inline-block;font-size:1rem;transition:all .3s}
+        .star.earned{color:#f5c542;filter:drop-shadow(0 1px 2px rgba(245,197,66,.4))}
+        .star.empty{color:#e8ddd0}
+        .star-lg{font-size:1.5rem}
+        /* Rank badge */
+        .rank-badge{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:.75rem;color:white}
+        .rank-S{background:linear-gradient(135deg,#e8788a,#f5c542)}.rank-A{background:#5bbfb5}.rank-B{background:#5b9fd6}.rank-C{background:#9b7fd4}.rank-D{background:#c4b5a5}
+        /* Lock overlay */
+        .locked-overlay{position:relative;pointer-events:none;opacity:.5}
+        .locked-overlay::after{content:'🔒';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:2rem;filter:drop-shadow(0 2px 8px rgba(0,0,0,.2))}
+        /* Unlock requirement */
+        .unlock-req{background:linear-gradient(135deg,#fef6dc,#fce8ec);border:2px dashed #f5c542;border-radius:1rem;padding:8px 12px;text-align:center;font-size:.7rem;color:#6b5c5c}
+        @media(max-width:380px){.monster-sprite{font-size:3.5rem}.numpad-btn{font-size:1.2rem}}
     </style>
 </head>
-<body class="bg-surface font-body text-on-surface min-h-screen pb-32 sm:pb-24 pt-safe">
+<body class="bg-storybook pattern-dots font-sans text-bark min-h-screen pb-28 sm:pb-24">
 
-<!-- TopAppBar -->
-<header class="bg-[#f7f9fb]/90 backdrop-blur-md dark:bg-slate-900/90 fixed top-0 w-full z-50 border-b border-surface-container-high">
-    <div class="flex justify-between items-center w-full px-6 py-4 max-w-screen-xl mx-auto">
-        <div class="flex items-center gap-3 cursor-pointer touch-target" onclick="app.nav('home')">
-            <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
-                <span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">swords</span>
-            </div>
-            <span class="text-xl font-extrabold text-primary dark:text-blue-400 font-headline tracking-tight">MathBattle</span>
+<header class="fixed top-0 w-full z-50 bg-cream/85 backdrop-blur-lg border-b border-sand/60">
+    <div class="flex justify-between items-center w-full px-5 py-3 max-w-lg mx-auto">
+        <div class="flex items-center gap-2.5 cursor-pointer" onclick="app.nav('home')">
+            <div class="w-9 h-9 rounded-full bg-gradient-to-br from-rose to-amber flex items-center justify-center shadow-sm"><span class="text-white text-lg">✨</span></div>
+            <span class="text-lg font-display font-black tracking-tight bg-gradient-to-r from-rose to-amber bg-clip-text text-transparent">MathBattle</span>
         </div>
-        <div class="text-primary dark:text-blue-400 font-headline font-bold tracking-tight text-right flex flex-col">
-            <span id="header-level">Lvl 1</span>
-            <span id="header-xp" class="text-xs text-outline">0 XP</span>
+        <div class="text-right font-display">
+            <span id="header-level" class="text-sm font-bold text-rose">Lv.1</span>
+            <span id="header-xp" class="block text-[10px] text-bark-light">0 XP</span>
         </div>
     </div>
 </header>
 
-<div id="app-container" class="max-w-screen-xl mx-auto px-4 sm:px-6 pt-24 space-y-8">
+<div id="app-container" class="max-w-lg mx-auto px-4 pt-20 space-y-5">
 
-    <!-- ================= HOME VIEW ================= -->
-    <main id="home-view" class="view active space-y-6">
-        <section class="bg-surface-container-lowest rounded-3xl p-6 shadow-sm border border-surface-container">
-            <h2 class="font-headline text-2xl font-bold mb-4">冒険の記録</h2>
-            <div class="bg-primary bg-gradient-to-br from-primary to-primary-container rounded-2xl p-6 text-white text-center relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-10 -mt-10 blur-xl"></div>
-                <h3 class="font-headline text-3xl font-extrabold mb-2" id="home-level-display">Level 1</h3>
-                <p class="text-white/80 text-sm mb-4" id="home-xp-text">0 / 1000 XP to Level 2</p>
-                <div class="w-full bg-white/20 rounded-full h-4 overflow-hidden mb-2 relative">
-                    <div id="home-xp-bar" class="bg-white h-full w-0 rounded-full transition-all duration-1000"></div>
+    <!-- HOME -->
+    <main id="home-view" class="view active space-y-5">
+        <section class="card card-glow p-5 relative overflow-hidden">
+            <div class="absolute -top-6 -right-6 w-28 h-28 bg-gradient-to-br from-amber/20 to-rose/10 rounded-full blur-2xl"></div>
+            <div class="relative z-10">
+                <p class="font-display text-xs font-bold text-rose mb-1">ぼうけんの記録</p>
+                <h2 class="font-display text-2xl font-black mb-1" id="home-level-display">Level 1</h2>
+                <p class="text-xs text-bark-light mb-3" id="home-xp-text">0 / 1000 XP to Level 2</p>
+                <div class="w-full h-3 rounded-full bg-sand/60 overflow-hidden">
+                    <div id="home-xp-bar" class="h-full rounded-full bg-gradient-to-r from-rose to-amber transition-all duration-1000" style="width:0%"></div>
                 </div>
             </div>
         </section>
 
-        <section class="grid grid-cols-2 gap-4">
-            <div onclick="app.nav('badges')" class="bg-surface-container-lowest rounded-3xl p-6 shadow-sm flex flex-col items-center justify-center cursor-pointer hover:bg-surface-container touch-target transition-colors">
-                <span class="material-symbols-outlined text-4xl text-yellow-500 mb-2" style="font-variation-settings: 'FILL' 1;">military_tech</span>
-                <span class="font-headline font-bold text-center">バッジ<br>コレクション</span>
+        <!-- Mastery progress -->
+        <section class="card p-4 flex items-center gap-4">
+            <div class="flex-1">
+                <p class="font-display text-xs font-bold text-bark-light mb-1">⭐ マスターしんちょく</p>
+                <div class="flex items-center gap-2">
+                    <div class="flex-1 h-2.5 rounded-full bg-sand/60 overflow-hidden">
+                        <div id="home-star-bar" class="h-full rounded-full bg-gradient-to-r from-amber to-amber/70 transition-all duration-700" style="width:0%"></div>
+                    </div>
+                    <span id="home-star-text" class="font-display text-xs font-black text-amber">0/0</span>
+                </div>
             </div>
-            <div onclick="app.nav('history')" class="bg-surface-container-lowest rounded-3xl p-6 shadow-sm flex flex-col items-center justify-center cursor-pointer hover:bg-surface-container touch-target transition-colors">
-                <span class="material-symbols-outlined text-4xl text-secondary mb-2">auto_graph</span>
-                <span class="font-headline font-bold text-center">バトルの<br>履歴</span>
+            <div class="text-center">
+                <span id="home-best-rank" class="rank-badge rank-D">D</span>
+                <p class="text-[9px] text-bark-light mt-0.5">総合ランク</p>
             </div>
         </section>
 
-        <button onclick="app.nav('setup')" class="w-full h-16 rounded-2xl bg-primary text-white font-headline font-bold text-lg flex items-center justify-center gap-3 shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity touch-target">
-            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">swords</span>
-            新しい冒険に出発
+        <section class="grid grid-cols-3 gap-3">
+            <div onclick="app.nav('badges')" class="card p-4 flex flex-col items-center gap-2 cursor-pointer hover:scale-[1.03] transition-transform touch-target">
+                <span class="text-2xl">🏅</span><span class="font-display text-xs font-bold text-center">バッジ</span>
+            </div>
+            <div onclick="app.nav('encyclopedia')" class="card p-4 flex flex-col items-center gap-2 cursor-pointer hover:scale-[1.03] transition-transform touch-target">
+                <span class="text-2xl">📖</span><span class="font-display text-xs font-bold text-center">図鑑</span>
+            </div>
+            <div onclick="app.nav('history')" class="card p-4 flex flex-col items-center gap-2 cursor-pointer hover:scale-[1.03] transition-transform touch-target">
+                <span class="text-2xl">📊</span><span class="font-display text-xs font-bold text-center">きろく</span>
+            </div>
+        </section>
+
+        <button onclick="app.nav('setup')" class="w-full h-14 rounded-2xl bg-gradient-to-r from-rose to-amber text-white font-display font-black text-base flex items-center justify-center gap-2 shadow-lg shadow-rose/25 hover:shadow-xl hover:shadow-rose/30 hover:scale-[1.02] transition-all touch-target">
+            ⚔️ ぼうけんに出発！
         </button>
+
+        <!-- Next unlock hint -->
+        <div id="home-unlock-hint" class="unlock-req hidden">
+            <span id="unlock-hint-text"></span>
+        </div>
     </main>
 
-    <!-- ================= SETUP VIEW ================= -->
-    <main id="setup-view" class="view space-y-6">
-        <h2 class="font-headline text-2xl font-bold">出撃準備</h2>
-        
-        <div class="bg-surface-container-lowest rounded-3xl p-6 shadow-sm space-y-6">
+    <!-- SETUP -->
+    <main id="setup-view" class="view space-y-5">
+        <h2 class="font-display text-xl font-black flex items-center gap-2">🗺️ 出撃じゅんび</h2>
+        <div class="card p-5 space-y-5">
             <div>
-                <h3 class="font-label text-sm text-outline mb-3">ターゲット（難易度）</h3>
-                <div class="grid grid-cols-3 gap-3" id="difficulty-selectors">
-                    <!-- JSで生成 -->
-                </div>
-                <p id="monster-preview" class="text-sm mt-3 text-center text-on-surface-variant flex items-center justify-center gap-2">
-                    <!-- モンスター情報 -->
-                </p>
+                <h3 class="font-display text-xs font-bold text-bark-light mb-2.5">冒険先をえらぶ</h3>
+                <div id="difficulty-selectors" class="grid grid-cols-2 gap-2.5"></div>
             </div>
-
+            <div id="monster-select-area" class="hidden">
+                <h3 class="font-display text-xs font-bold text-bark-light mb-2.5">たたかう相手</h3>
+                <div id="monster-selectors" class="space-y-2.5"></div>
+            </div>
             <div>
-                <h3 class="font-label text-sm text-outline mb-3">使う魔法（演算・複数可）</h3>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    <label class="flex items-center gap-2 p-3 border rounded-xl cursor-pointer bg-surface-container-low touch-target"><input type="checkbox" id="op-add" checked class="form-checkbox text-primary rounded"> <span>＋ たし算</span></label>
-                    <label class="flex items-center gap-2 p-3 border rounded-xl cursor-pointer bg-surface-container-low touch-target"><input type="checkbox" id="op-sub" checked class="form-checkbox text-primary rounded"> <span>－ ひき算</span></label>
-                    <label class="flex items-center gap-2 p-3 border rounded-xl cursor-pointer bg-surface-container-low touch-target"><input type="checkbox" id="op-mul" class="form-checkbox text-primary rounded"> <span>× かけ算</span></label>
-                    <label class="flex items-center gap-2 p-3 border rounded-xl cursor-pointer bg-surface-container-low touch-target"><input type="checkbox" id="op-div" class="form-checkbox text-primary rounded"> <span>÷ わり算</span></label>
+                <h3 class="font-display text-xs font-bold text-bark-light mb-2.5">つかう魔法（えんざん）</h3>
+                <div class="grid grid-cols-2 gap-2">
+                    <label class="flex items-center gap-2 p-2.5 rounded-xl bg-mint-light/50 border-2 border-transparent has-[:checked]:border-mint cursor-pointer transition-colors touch-target"><input type="checkbox" id="op-add" checked class="form-checkbox rounded text-mint focus:ring-mint"> <span class="text-sm font-bold">＋ たし算</span></label>
+                    <label class="flex items-center gap-2 p-2.5 rounded-xl bg-ocean-light/50 border-2 border-transparent has-[:checked]:border-ocean cursor-pointer transition-colors touch-target"><input type="checkbox" id="op-sub" checked class="form-checkbox rounded text-ocean focus:ring-ocean"> <span class="text-sm font-bold">－ ひき算</span></label>
+                    <label class="flex items-center gap-2 p-2.5 rounded-xl bg-rose-light/50 border-2 border-transparent has-[:checked]:border-rose cursor-pointer transition-colors touch-target"><input type="checkbox" id="op-mul" class="form-checkbox rounded text-rose focus:ring-rose"> <span class="text-sm font-bold">× かけ算</span></label>
+                    <label class="flex items-center gap-2 p-2.5 rounded-xl bg-plum-light/50 border-2 border-transparent has-[:checked]:border-plum cursor-pointer transition-colors touch-target"><input type="checkbox" id="op-div" class="form-checkbox rounded text-plum focus:ring-plum"> <span class="text-sm font-bold">÷ わり算</span></label>
                 </div>
             </div>
-            
-            <button onclick="app.startBattle()" class="w-full h-16 rounded-2xl bg-error text-white font-headline font-bold text-lg flex items-center justify-center gap-3 shadow-lg shadow-error/20 hover:opacity-90 touch-target mt-4">
-                バトル開始 (100問)
+            <button onclick="app.startBattle()" class="w-full h-14 rounded-2xl bg-gradient-to-r from-rose to-rose/80 text-white font-display font-black text-base flex items-center justify-center gap-2 shadow-lg shadow-rose/20 hover:scale-[1.02] transition-all touch-target">
+                ⚔️ バトル開始！（100問）
             </button>
         </div>
     </main>
 
-    <!-- ================= BATTLE VIEW ================= -->
+    <!-- BATTLE -->
     <main id="battle-view" class="view">
-        <div class="flex flex-col h-[calc(100vh-140px)] justify-between max-w-md mx-auto">
-            <!-- 上部ステータス -->
-            <div class="flex justify-between items-center mb-4 bg-surface-container-lowest p-4 rounded-2xl shadow-sm">
-                <div class="flex flex-col">
-                    <span class="text-xs font-label text-outline">進捗</span>
-                    <span class="font-headline font-bold text-lg"><span id="battle-progress">1</span> / 100</span>
+        <div class="flex flex-col h-[calc(100dvh-130px)] justify-between max-w-md mx-auto">
+            <div class="flex justify-between items-center mb-2 card px-4 py-2.5">
+                <div><span class="text-[10px] font-bold text-bark-light block">しんちょく</span><span class="font-display font-black text-base"><span id="battle-progress">1</span>/100</span></div>
+                <div id="combo-display" class="hidden"><span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-amber-light font-display text-xs font-black text-amber">🔥 <span id="combo-count">0</span> COMBO</span></div>
+                <div class="text-right"><span class="text-[10px] font-bold text-bark-light block">タイム</span><span class="font-display font-black text-base" id="battle-timer">00:00</span></div>
+            </div>
+            <div id="monster-area" class="flex-1 card p-4 flex flex-col items-center justify-center relative overflow-hidden mb-2">
+                <div class="absolute top-3 left-3 right-3">
+                    <div class="flex justify-between items-center mb-1">
+                        <span id="boss-name-bar" class="text-[10px] font-display font-bold text-rose">BOSS HP</span>
+                        <span id="boss-hp-text" class="text-[10px] font-display font-bold text-bark-light">100%</span>
+                    </div>
+                    <div class="hp-track"><div id="monster-hp-bar" class="hp-fill bg-gradient-to-r from-rose to-rose/70 w-full"></div></div>
                 </div>
-                <div class="flex flex-col text-right">
-                    <span class="text-xs font-label text-outline">タイム</span>
-                    <span class="font-headline font-bold text-lg" id="battle-timer">00:00</span>
+                <div class="monster-glow w-32 h-32 rounded-full flex items-center justify-center mt-6 mb-1">
+                    <div id="monster-sprite" class="monster-sprite animate-float">🧚</div>
+                </div>
+                <h3 id="monster-name" class="font-display text-xs font-bold text-bark-light mb-3"></h3>
+                <div class="font-display text-3xl sm:text-4xl font-black tracking-wider text-center text-bark" id="battle-question">-- + -- =</div>
+                <div class="mt-2 h-11 flex items-center justify-center min-w-[90px] border-b-[3px] border-rose text-2xl font-display font-black text-rose" id="battle-input">&nbsp;</div>
+            </div>
+            <div class="mb-2 card px-4 py-2.5">
+                <div class="flex justify-between items-center mb-1">
+                    <span class="text-[10px] font-display font-bold text-rose flex items-center gap-1">⚡ パワーゲージ</span>
+                    <span id="power-gauge-label" class="text-[10px] font-display font-bold text-bark-light">100%</span>
+                </div>
+                <div class="gauge-track"><div id="power-gauge-fill" class="gauge-fill gauge-max" style="width:100%"></div></div>
+                <div class="flex justify-between mt-1 text-[9px] text-pebble font-bold">
+                    <span id="damage-preview">よそうダメージ: --</span>
+                    <span id="speed-indicator">スピード: --</span>
                 </div>
             </div>
-
-            <!-- モンスターエリア -->
-            <div id="monster-area" class="flex-1 bg-surface-container-lowest rounded-3xl p-6 flex flex-col items-center justify-center shadow-sm relative overflow-hidden mb-4">
-                <div class="absolute top-4 left-4 right-4 h-2 bg-surface-container rounded-full overflow-hidden">
-                    <div id="monster-hp-bar" class="h-full bg-error transition-all duration-300 w-full"></div>
+            <div class="grid grid-cols-4 gap-1.5 mb-1">
+                <div class="col-span-3 grid grid-cols-3 gap-1.5">
+                    <button class="numpad-btn h-[52px]" onclick="app.inputNum(7)">7</button>
+                    <button class="numpad-btn h-[52px]" onclick="app.inputNum(8)">8</button>
+                    <button class="numpad-btn h-[52px]" onclick="app.inputNum(9)">9</button>
+                    <button class="numpad-btn h-[52px]" onclick="app.inputNum(4)">4</button>
+                    <button class="numpad-btn h-[52px]" onclick="app.inputNum(5)">5</button>
+                    <button class="numpad-btn h-[52px]" onclick="app.inputNum(6)">6</button>
+                    <button class="numpad-btn h-[52px]" onclick="app.inputNum(1)">1</button>
+                    <button class="numpad-btn h-[52px]" onclick="app.inputNum(2)">2</button>
+                    <button class="numpad-btn h-[52px]" onclick="app.inputNum(3)">3</button>
+                    <button class="numpad-btn h-[52px] !text-rose" onclick="app.clearInput()">C</button>
+                    <button class="numpad-btn h-[52px]" onclick="app.inputNum(0)">0</button>
+                    <button class="numpad-btn h-[52px] !text-pebble" onclick="app.deleteInput()">←</button>
                 </div>
-                <div id="monster-sprite" class="monster-sprite mb-4 mt-6">👾</div>
-                <h3 id="monster-name" class="font-label text-sm text-outline mb-6">スライム 1匹目</h3>
-                
-                <!-- 問題 -->
-                <div class="font-headline text-5xl font-extrabold tracking-widest text-center" id="battle-question">
-                    -- + -- =
-                </div>
-                <div class="mt-4 h-12 flex items-center justify-center min-w-[100px] border-b-4 border-primary text-3xl font-bold text-primary" id="battle-input">
-                    <!-- 入力値 -->
-                </div>
-            </div>
-
-            <!-- 電卓キーパッド (ペルソナ指定: 789, 456, 123, C0Del) -->
-            <div class="grid grid-cols-4 gap-2 mb-2">
-                <div class="col-span-3 grid grid-cols-3 gap-2">
-                    <button class="numpad-btn h-14" onclick="app.inputNum(7)">7</button>
-                    <button class="numpad-btn h-14" onclick="app.inputNum(8)">8</button>
-                    <button class="numpad-btn h-14" onclick="app.inputNum(9)">9</button>
-                    <button class="numpad-btn h-14" onclick="app.inputNum(4)">4</button>
-                    <button class="numpad-btn h-14" onclick="app.inputNum(5)">5</button>
-                    <button class="numpad-btn h-14" onclick="app.inputNum(6)">6</button>
-                    <button class="numpad-btn h-14" onclick="app.inputNum(1)">1</button>
-                    <button class="numpad-btn h-14" onclick="app.inputNum(2)">2</button>
-                    <button class="numpad-btn h-14" onclick="app.inputNum(3)">3</button>
-                    <button class="numpad-btn h-14 text-error" onclick="app.clearInput()">C</button>
-                    <button class="numpad-btn h-14" onclick="app.inputNum(0)">0</button>
-                    <button class="numpad-btn h-14 text-outline" onclick="app.deleteInput()"><span class="material-symbols-outlined">backspace</span></button>
-                </div>
-                <button class="numpad-btn bg-primary text-white h-full" onclick="app.submitAnswer()">
-                    <span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">keyboard_return</span>
-                </button>
+                <button class="numpad-btn !bg-gradient-to-b !from-rose !to-rose/85 !text-white h-full !shadow-[0_3px_0_#c4606f,0_4px_12px_rgba(232,120,138,.25)]" onclick="app.submitAnswer()">OK</button>
             </div>
         </div>
     </main>
 
-    <!-- ================= RESULT VIEW (既存コードベース＋カスタマイズ) ================= -->
-    <main id="result-view" class="view space-y-8">
-        <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            <div class="lg:col-span-7 bg-surface-container-lowest rounded-3xl p-8 flex flex-col justify-center relative overflow-hidden shadow-sm">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -mr-20 -mt-20 blur-3xl"></div>
-                <div class="relative z-10">
-                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full font-label text-sm mb-6">
-                        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">military_tech</span> MISSION COMPLETE
-                    </div>
-                    <h1 class="font-headline text-5xl font-extrabold text-on-surface mb-4 tracking-tight">VICTORY</h1>
-                    <p class="text-on-surface-variant text-lg max-w-md mb-8">You conquered the 100-Question Gauntlet.</p>
-                    <div class="flex items-center gap-6">
-                        <div class="flex flex-col">
-                            <span class="font-label text-xs text-outline tracking-widest uppercase">XP EARNED</span>
-                            <span class="font-headline text-3xl font-bold text-primary" id="result-xp">+0 XP</span>
-                        </div>
-                        <div class="w-px h-10 bg-surface-container-highest"></div>
-                        <div class="flex flex-col">
-                            <span class="font-label text-xs text-outline tracking-widest uppercase">ACCURACY</span>
-                            <span class="font-headline text-3xl font-bold text-on-surface" id="result-accuracy">0%</span>
-                        </div>
-                        <div class="w-px h-10 bg-surface-container-highest"></div>
-                        <div class="flex flex-col">
-                            <span class="font-label text-xs text-outline tracking-widest uppercase">TIME</span>
-                            <span class="font-headline text-3xl font-bold text-on-surface" id="result-time">00:00</span>
-                        </div>
-                    </div>
+    <!-- RESULT -->
+    <main id="result-view" class="view space-y-5">
+        <section class="card card-glow p-6 relative overflow-hidden text-center">
+            <div class="absolute -top-10 -right-10 w-40 h-40 bg-gradient-to-br from-amber/15 to-rose/10 rounded-full blur-3xl"></div>
+            <div class="relative z-10">
+                <span id="result-status-badge" class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-mint-light text-mint font-display text-xs font-bold mb-3">✨ BOSS DEFEATED</span>
+                <h1 id="result-title" class="font-display text-4xl font-black mb-1 bg-gradient-to-r from-rose to-amber bg-clip-text text-transparent">VICTORY!</h1>
+                <p id="result-subtitle" class="text-sm text-bark-light mb-4"></p>
+                <!-- Stars earned -->
+                <div id="result-stars" class="flex justify-center gap-2 mb-4"></div>
+                <!-- Rank earned -->
+                <div class="flex justify-center items-center gap-3 mb-4">
+                    <span id="result-rank" class="rank-badge rank-D text-xl !w-12 !h-12 !rounded-xl !text-lg">D</span>
+                    <div class="text-left"><p class="text-[10px] text-bark-light">スピードランク</p><p id="result-avg-speed" class="font-display font-black text-sm">平均 --秒</p></div>
                 </div>
-            </div>
-
-            <!-- Monster Slain Status & Badge -->
-            <div class="lg:col-span-5 space-y-6">
-                <div class="bg-primary bg-gradient-to-br from-primary to-primary-container rounded-3xl p-8 text-on-primary shadow-lg flex flex-col items-center text-center relative">
-                    <div id="badge-earned-overlay" class="hidden absolute inset-0 bg-yellow-400/90 rounded-3xl z-20 flex flex-col items-center justify-center text-on-surface">
-                        <span class="material-symbols-outlined text-6xl text-white mb-2" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
-                        <h3 class="font-headline text-2xl font-bold">NEW BADGE!</h3>
-                        <p id="badge-name-display" class="font-bold"></p>
-                    </div>
-                    <div class="w-32 h-32 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center mb-6">
-                        <span id="result-monster-icon" class="text-6xl">💀</span>
-                    </div>
-                    <h3 class="font-headline text-2xl font-bold mb-1">Boss Slain!</h3>
-                    <p class="font-body text-white/80 text-sm mb-6" id="result-boss-name">Level Boss Defeated</p>
+                <!-- XP note -->
+                <p id="result-xp-note" class="text-[10px] text-pebble italic hidden mb-2"></p>
+                <div class="grid grid-cols-4 gap-2 text-center">
+                    <div><span class="block text-[9px] font-bold text-bark-light uppercase">XP</span><span class="font-display text-lg font-black text-rose" id="result-xp">+0</span></div>
+                    <div><span class="block text-[9px] font-bold text-bark-light uppercase">正答率</span><span class="font-display text-lg font-black" id="result-accuracy">0%</span></div>
+                    <div><span class="block text-[9px] font-bold text-bark-light uppercase">タイム</span><span class="font-display text-lg font-black" id="result-time">00:00</span></div>
+                    <div><span class="block text-[9px] font-bold text-bark-light uppercase">ダメージ</span><span class="font-display text-lg font-black text-rose" id="result-total-damage">0</span></div>
                 </div>
+                <!-- Personal best indicator -->
+                <div id="result-pb" class="hidden mt-3 inline-flex items-center gap-1 px-3 py-1 rounded-full bg-amber-light font-display text-xs font-bold text-amber">🎉 自己ベスト更新！</div>
             </div>
         </section>
-
-        <!-- Accuracy Matrix Section -->
-        <section class="bg-surface-container-lowest rounded-3xl p-8 shadow-sm">
-            <div class="flex items-center justify-between mb-8">
-                <div>
-                    <h2 class="font-headline text-2xl font-bold text-on-surface">Accuracy Matrix</h2>
-                    <p class="text-on-surface-variant text-sm">Visual breakdown of your 100-question performance</p>
-                </div>
-                <div class="flex gap-4">
-                    <div class="flex items-center gap-2"><div class="w-3 h-3 rounded bg-primary"></div><span class="text-xs font-label text-outline">Correct</span></div>
-                    <div class="flex items-center gap-2"><div class="w-3 h-3 rounded bg-error-container"></div><span class="text-xs font-label text-outline">Missed</span></div>
-                </div>
+        <section id="result-boss-card" class="card p-5 flex items-center gap-4 relative overflow-hidden">
+            <div id="badge-earned-overlay" class="hidden absolute inset-0 bg-gradient-to-br from-amber to-amber/90 rounded-[1.5rem] z-20 flex flex-col items-center justify-center text-white"><span class="text-5xl mb-2">🏅</span><h3 class="font-display text-xl font-black">NEW BADGE!</h3><p id="badge-name-display" class="font-bold text-sm"></p></div>
+            <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-rose-light to-amber-light flex items-center justify-center shrink-0"><span id="result-monster-icon" class="text-4xl">💀</span></div>
+            <div class="flex-1 min-w-0">
+                <h3 id="result-boss-title" class="font-display font-black text-base mb-1">Boss Slain!</h3>
+                <p id="result-boss-name" class="text-xs text-bark-light mb-2"></p>
+                <div class="hp-track"><div id="result-boss-hp-remaining" class="hp-fill bg-gradient-to-r from-rose to-rose/60" style="width:0%"></div></div>
+                <p id="result-boss-hp-text" class="text-[10px] text-pebble mt-1"></p>
             </div>
-            <!-- JSで100マス生成 -->
+        </section>
+        <!-- Unlock message -->
+        <div id="result-unlock-msg" class="hidden unlock-req text-sm font-bold"></div>
+        <section class="card p-5">
+            <div class="flex items-center justify-between mb-4"><h2 class="font-display text-base font-black">📋 けっか</h2><div class="flex gap-3 text-[10px] font-bold text-bark-light"><span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-mint"></span>⭕</span><span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-rose"></span>❌</span></div></div>
             <div id="accuracy-matrix" class="matrix-grid"></div>
         </section>
-
-        <!-- Time Chart (新機能) -->
-        <section class="bg-surface-container-lowest rounded-3xl p-8 shadow-sm">
-             <h2 class="font-headline text-2xl font-bold text-on-surface mb-4">解答スピード (秒)</h2>
-             <div class="h-32 flex items-end gap-1 w-full overflow-x-auto overflow-y-hidden" id="time-chart">
-                 <!-- JSで棒グラフ生成 -->
-             </div>
-        </section>
-
-        <!-- Review Errors Section -->
-        <section class="space-y-6" id="review-errors-section">
-            <h2 class="font-headline text-2xl font-bold text-on-surface">Review Errors</h2>
-            <div id="error-cards" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- JSで生成 -->
-            </div>
-        </section>
-
-        <!-- Action Buttons -->
-        <section class="flex flex-col sm:flex-row gap-4 pt-4">
-            <button onclick="app.nav('setup')" class="flex-1 h-16 rounded-2xl bg-primary text-white font-headline font-bold text-lg flex items-center justify-center gap-3 shadow-lg hover:opacity-90 touch-target">
-                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">replay</span> 新しいチャレンジ
-            </button>
-            <button onclick="app.nav('history')" class="flex-1 h-16 rounded-2xl bg-surface-container-high text-on-surface font-headline font-bold text-lg flex items-center justify-center gap-3 hover:bg-surface-container-highest touch-target">
-                <span class="material-symbols-outlined">analytics</span> 履歴を見る
-            </button>
+        <section class="card p-5"><h2 class="font-display text-base font-black mb-3">⏱️ スピード</h2><div class="h-24 flex items-end gap-[2px] w-full overflow-x-auto overflow-y-hidden" id="time-chart"></div></section>
+        <section class="space-y-3" id="review-errors-section"><h2 class="font-display text-base font-black">📝 まちがえた問題</h2><div id="error-cards" class="space-y-2.5"></div></section>
+        <section class="flex gap-3 pt-2">
+            <button onclick="app.nav('setup')" class="flex-1 h-12 rounded-2xl bg-gradient-to-r from-rose to-amber text-white font-display font-black text-sm flex items-center justify-center gap-2 shadow-md touch-target">⚔️ つぎへ</button>
+            <button onclick="app.nav('history')" class="flex-1 h-12 rounded-2xl bg-sand text-bark font-display font-black text-sm flex items-center justify-center gap-2 touch-target">📊 きろく</button>
         </section>
     </main>
 
-    <!-- ================= HISTORY VIEW ================= -->
-    <main id="history-view" class="view space-y-6">
-        <h2 class="font-headline text-2xl font-bold">バトルの履歴</h2>
-        <div id="history-list" class="space-y-4">
-            <!-- JSで生成 -->
-        </div>
+    <!-- ENCYCLOPEDIA -->
+    <main id="encyclopedia-view" class="view space-y-5">
+        <div class="card p-5"><h2 class="font-display text-xl font-black flex items-center gap-2 mb-1">📖 せかいの妖怪図鑑</h2><p id="encyclopedia-progress" class="text-xs text-bark-light"></p></div>
+        <div id="encyclopedia-list" class="space-y-3"></div>
     </main>
 
-    <!-- ================= BADGES VIEW ================= -->
-    <main id="badges-view" class="view space-y-6">
-        <div class="bg-surface-container-lowest p-6 rounded-3xl shadow-sm text-center">
-            <h2 class="font-headline text-2xl font-bold mb-2">バッジコレクション</h2>
-            <p class="text-sm text-on-surface-variant text-left">※ゲームの価値を保つため、一度獲得したバッジは同じ難易度で再獲得できません。より高い難易度に挑戦しよう！</p>
-        </div>
-        <div id="badges-list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            <!-- JSで生成 -->
-        </div>
+    <!-- HISTORY -->
+    <main id="history-view" class="view space-y-5">
+        <h2 class="font-display text-xl font-black">📊 バトルのきろく</h2>
+        <div id="history-list" class="space-y-2.5"></div>
     </main>
 
-    <!-- ================= SETTINGS VIEW ================= -->
-    <main id="settings-view" class="view space-y-6">
-        <h2 class="font-headline text-2xl font-bold">システム設定</h2>
-        
-        <section class="bg-surface-container-lowest rounded-3xl p-6 shadow-sm space-y-4">
-            <h3 class="font-bold flex items-center gap-2"><span class="material-symbols-outlined">database</span> データ管理 (IndexedDB)</h3>
-            <div class="flex gap-4">
-                <button onclick="app.exportData()" class="px-4 py-2 bg-surface-container text-on-surface rounded-lg font-label text-sm touch-target">エクスポート</button>
-                <button onclick="document.getElementById('import-file').click()" class="px-4 py-2 bg-surface-container text-on-surface rounded-lg font-label text-sm touch-target">インポート</button>
-                <input type="file" id="import-file" class="hidden" accept=".json" onchange="app.importData(event)">
-            </div>
-        </section>
-
-        <section class="bg-surface-container-lowest rounded-3xl p-6 shadow-sm space-y-4">
-            <h3 class="font-bold flex items-center gap-2"><span class="material-symbols-outlined">smart_toy</span> AI連携 (拡張用)</h3>
-            <div>
-                <label class="block text-xs font-label text-outline mb-1">API Key (暗号化されてDB保存)</label>
-                <input type="password" id="setting-api-key" placeholder="sk-..." class="w-full rounded-xl border-outline-variant bg-surface p-3 font-mono text-sm">
-            </div>
-            <div>
-                <label class="block text-xs font-label text-outline mb-1">システムプロンプト</label>
-                <textarea id="setting-prompt" rows="3" class="w-full rounded-xl border-outline-variant bg-surface p-3 text-sm">You are an encouraging AI tutor for elementary kids.</textarea>
-            </div>
-            <button onclick="app.saveSettings()" class="w-full py-3 bg-primary text-white rounded-xl font-bold touch-target">保存する</button>
-        </section>
-
-        <section class="bg-surface-container-lowest rounded-3xl p-6 shadow-sm">
-            <h3 class="font-bold mb-2">プライバシーポリシー</h3>
-            <p class="text-xs text-on-surface-variant leading-relaxed">
-                本アプリケーション「MathBattle」は、Google Playポリシーの「Minimum Functionality」を遵守し、Web体験の単なるミラーリングではない独自のインタラクティブ機能を提供します。<br>
-                **データ収集**: プレイ履歴や設定データは、デバイス内のIndexedDBにのみ保存され、外部サーバーへの自動送信は行いません。<br>
-                **AI機能**: 入力されたAPIキーはローカルのIndexedDBのみに保存され、ユーザー自身の意思によるAI通信時のみ使用されます。入力のサニタイズを徹底し、XSS等の脆弱性から保護されています。
-            </p>
-        </section>
+    <!-- BADGES -->
+    <main id="badges-view" class="view space-y-5">
+        <div class="card p-5"><h2 class="font-display text-xl font-black mb-1">🏅 バッジコレクション</h2><p class="text-xs text-bark-light">モンスターを倒すとバッジがもらえるよ！</p></div>
+        <div id="badges-list" class="grid grid-cols-3 gap-3"></div>
     </main>
 
+    <!-- SETTINGS -->
+    <main id="settings-view" class="view space-y-5">
+        <h2 class="font-display text-xl font-black">⚙️ せってい</h2>
+        <section class="card p-5 space-y-3"><h3 class="font-display text-sm font-bold">💾 データ管理</h3><div class="flex gap-3"><button onclick="app.exportData()" class="px-4 py-2 rounded-xl bg-sand text-bark font-display text-xs font-bold touch-target">エクスポート</button><button onclick="document.getElementById('import-file').click()" class="px-4 py-2 rounded-xl bg-sand text-bark font-display text-xs font-bold touch-target">インポート</button><input type="file" id="import-file" class="hidden" accept=".json" onchange="app.importData(event)"></div></section>
+        <section class="card p-5 space-y-3"><h3 class="font-display text-sm font-bold">📁 character.json</h3><p class="text-[11px] text-bark-light">モンスターを自由についか・変更できます</p><div class="flex gap-3"><button onclick="document.getElementById('char-import-file').click()" class="px-4 py-2 rounded-xl bg-mint-light text-mint font-display text-xs font-bold touch-target">インポート</button><input type="file" id="char-import-file" class="hidden" accept=".json" onchange="app.importCharacters(event)"><button onclick="app.resetCharacters()" class="px-4 py-2 rounded-xl bg-rose-light text-rose font-display text-xs font-bold touch-target">リセット</button></div></section>
+        <section class="card p-5 space-y-3"><h3 class="font-display text-sm font-bold">🤖 AI連携</h3><div><label class="block text-[10px] font-bold text-bark-light mb-1">API Key</label><input type="password" id="setting-api-key" placeholder="sk-..." class="w-full rounded-xl bg-cream border-sand p-2.5 font-mono text-xs"></div><div><label class="block text-[10px] font-bold text-bark-light mb-1">プロンプト</label><textarea id="setting-prompt" rows="2" class="w-full rounded-xl bg-cream border-sand p-2.5 text-xs">You are an encouraging AI tutor for elementary kids.</textarea></div><button onclick="app.saveSettings()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-rose to-amber text-white font-display font-bold text-sm touch-target">保存する</button></section>
+    </main>
 </div>
 
-<!-- BottomNavBar -->
-<nav class="fixed bottom-0 left-0 w-full z-50 bg-[#f7f9fb]/90 dark:bg-slate-900/90 backdrop-blur-xl border-t border-surface-container-high pb-[max(16px,env(safe-area-inset-bottom))] pt-3 px-4 flex justify-around items-center">
-    <div onclick="app.nav('home')" id="nav-home" class="nav-item flex flex-col items-center justify-center text-slate-400 px-6 py-2 rounded-2xl cursor-pointer touch-target transition-all">
-        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
-        <span class="font-label text-[10px] font-medium mt-1">Home</span>
-    </div>
-    <div onclick="app.nav('setup')" id="nav-setup" class="nav-item flex flex-col items-center justify-center text-slate-400 px-6 py-2 rounded-2xl cursor-pointer touch-target transition-all">
-        <span class="material-symbols-outlined">calculate</span>
-        <span class="font-label text-[10px] font-medium mt-1">Battle</span>
-    </div>
-    <div onclick="app.nav('history')" id="nav-history" class="nav-item flex flex-col items-center justify-center text-slate-400 px-6 py-2 rounded-2xl cursor-pointer touch-target transition-all">
-        <span class="material-symbols-outlined">history</span>
-        <span class="font-label text-[10px] font-medium mt-1">History</span>
-    </div>
-    <div onclick="app.nav('settings')" id="nav-settings" class="nav-item flex flex-col items-center justify-center text-slate-400 px-6 py-2 rounded-2xl cursor-pointer touch-target transition-all">
-        <span class="material-symbols-outlined">settings</span>
-        <span class="font-label text-[10px] font-medium mt-1">Settings</span>
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-cream/90 backdrop-blur-xl border-t border-sand/60 pb-[max(10px,env(safe-area-inset-bottom))] pt-2 px-3">
+    <div class="flex justify-around items-center max-w-lg mx-auto">
+        <div onclick="app.nav('home')" id="nav-home" class="nav-pill flex flex-col items-center px-4 py-1.5 cursor-pointer touch-target"><span class="text-lg">🏠</span><span class="text-[9px] font-display font-bold mt-0.5">ホーム</span></div>
+        <div onclick="app.nav('setup')" id="nav-setup" class="nav-pill flex flex-col items-center px-4 py-1.5 cursor-pointer touch-target"><span class="text-lg">⚔️</span><span class="text-[9px] font-display font-bold mt-0.5">バトル</span></div>
+        <div onclick="app.nav('encyclopedia')" id="nav-encyclopedia" class="nav-pill flex flex-col items-center px-4 py-1.5 cursor-pointer touch-target"><span class="text-lg">📖</span><span class="text-[9px] font-display font-bold mt-0.5">図鑑</span></div>
+        <div onclick="app.nav('history')" id="nav-history" class="nav-pill flex flex-col items-center px-4 py-1.5 cursor-pointer touch-target"><span class="text-lg">📊</span><span class="text-[9px] font-display font-bold mt-0.5">きろく</span></div>
+        <div onclick="app.nav('settings')" id="nav-settings" class="nav-pill flex flex-col items-center px-4 py-1.5 cursor-pointer touch-target"><span class="text-lg">⚙️</span><span class="text-[9px] font-display font-bold mt-0.5">せってい</span></div>
     </div>
 </nav>
 
 <script>
-/**
- * MathBattle Core Application Logic
- * IndexedDB, Game Loop, Rendering, PWA
- */
-const App = (() => {
-    // === Utils ===
-    const $ = id => document.getElementById(id);
-    const escapeHTML = str => str.replace(/[&<>'"]/g, tag => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'}[tag]));
-    const formatTime = seconds => {
-        const m = Math.floor(seconds / 60).toString().padStart(2, '0');
-        const s = (seconds % 60).toString().padStart(2, '0');
-        return `${m}:${s}`;
-    };
+const App=(()=>{
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>'"]/g,t=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[t]));
+const fmt=s=>{const m=Math.floor(s/60).toString().padStart(2,'0');const ss=(s%60).toString().padStart(2,'0');return`${m}:${ss}`;};
 
-    // === Game Data & Config ===
-    const DB_NAME = 'MathBattleDB';
-    const DB_VER = 1;
-    let db = null;
+const DEFAULTS={
+    monsters:[
+        {id:"koropokkuru",name:"コロボックル",sprite:"🍃",difficulty:"easy",hp:800,attack:3,defense:1,xpReward:80,origin:"アイヌ（日本）",description:"アイヌの伝説に登場する小さな精霊。フキの葉の下に住み、人間にこっそり贈り物を届けてくれる。",badge:{id:"badge_koropokkuru",name:"森の友だち",icon:"🍃"},operandRange:[1,9]},
+        {id:"pixie",name:"ピクシー",sprite:"🧚",difficulty:"easy",hp:1000,attack:5,defense:2,xpReward:100,origin:"イギリス",description:"イギリスの森に住むイタズラ好きの妖精。キラキラした羽で空を飛び、旅人を迷わせるのが大好き。",badge:{id:"badge_pixie",name:"妖精のともだち",icon:"🧚"},operandRange:[1,9]},
+        {id:"selkie",name:"セルキー",sprite:"🦭",difficulty:"normal",hp:1800,attack:10,defense:4,xpReward:200,origin:"スコットランド",description:"海ではアザラシ、陸では人間の姿になれる不思議な存在。月夜に浜辺で美しい歌を歌う。",badge:{id:"badge_selkie",name:"海の歌い手",icon:"🦭"},operandRange:[10,99]},
+        {id:"yuki_onna",name:"ゆきおんな",sprite:"❄️",difficulty:"normal",hp:2200,attack:14,defense:5,xpReward:280,origin:"日本",description:"雪の降る夜にあらわれる白く美しい妖怪。心優しい人には道を教えてくれることも。",badge:{id:"badge_yuki_onna",name:"雪の旅人",icon:"❄️"},operandRange:[10,99]},
+        {id:"chupacabra",name:"チュパカブラ",sprite:"👽",difficulty:"normal",hp:2500,attack:16,defense:6,xpReward:320,origin:"中南米",description:"中南米で目撃される謎の生き物。大きな目とトゲトゲの背中が特徴で、実はちょっと臆病。",badge:{id:"badge_chupacabra",name:"謎のハンター",icon:"👽"},operandRange:[10,99]},
+        {id:"nine_tail_fox",name:"九尾のキツネ",sprite:"🦊",difficulty:"hard",hp:3500,attack:22,defense:8,xpReward:500,origin:"東アジア",description:"9本の尻尾を持つ神秘的なキツネ。千年を生きた知恵者で、変身の達人。",badge:{id:"badge_nine_tail",name:"キツネの知恵",icon:"🦊"},operandRange:[100,999]},
+        {id:"sphinx",name:"スフィンクス",sprite:"🦁",difficulty:"hard",hp:4200,attack:25,defense:12,xpReward:650,origin:"エジプト",description:"ライオンの体と人間の顔を持つ守護獣。旅人にナゾナゾを出す。",badge:{id:"badge_sphinx",name:"ナゾナゾマスター",icon:"🦁"},operandRange:[100,999]},
+        {id:"phoenix",name:"フェニックス",sprite:"🔥",difficulty:"extreme",hp:6000,attack:35,defense:15,xpReward:1000,origin:"ギリシャ",description:"炎の中から何度でも蘇る伝説の不死鳥。美しい炎の羽は見る者を魅了する。",badge:{id:"badge_phoenix",name:"不死鳥の翼",icon:"🔥"},operandRange:[100,9999]},
+        {id:"unicorn",name:"ユニコーン",sprite:"🦄",difficulty:"extreme",hp:8000,attack:45,defense:20,xpReward:1500,origin:"ヨーロッパ",description:"額に光る一本角を持つ聖なる馬。心の清い者にしか姿を見せない世界最強の幻獣。",badge:{id:"badge_unicorn",name:"伝説の挑戦者",icon:"🦄"},operandRange:[100,9999]}
+    ],
+    difficulties:[
+        {id:"easy",name:"はじまりの森",icon:"🌳",color:"#5bbfb5",xpMulti:1,order:0},
+        {id:"normal",name:"ふしぎの海",icon:"🌊",color:"#5b9fd6",xpMulti:2,order:1},
+        {id:"hard",name:"まよいの城",icon:"🏰",color:"#e8788a",xpMulti:5,order:2},
+        {id:"extreme",name:"せかいの果て",icon:"🌌",color:"#9b7fd4",xpMulti:10,order:3}
+    ]
+};
 
-    const DIFFICULTIES = [
-        { id: 'easy', name: 'スライム谷', ops: [1, 9], icon: '🟢', sprite: '👾', boss: 'キングスライム', xpMulti: 1 },
-        { id: 'normal', name: 'ゴブリン砦', ops: [10, 99], icon: '👹', sprite: '👺', boss: 'オーガチーフ', xpMulti: 2 },
-        { id: 'hard', name: '魔王の城', ops: [100, 999], icon: '🐉', sprite: '👿', boss: 'Algebra Behemoth', xpMulti: 5 }
-    ];
+const DB='MathBattleDB',VER=4;let db=null;
+let CD=JSON.parse(JSON.stringify(DEFAULTS));
+let S={user:{xp:0,level:1},settings:{apiKey:'',prompt:''},badges:[],history:[],defeated:[],
+    records:{}, // {monsterId: {stars,bestAcc,bestTime,bestAvgSpd,bestRank,plays}}
+    battle:{active:false,questions:[],currentIdx:0,inputStr:'',timerInterval:null,elapsed:0,monster:null,bossMaxHp:0,bossCurrentHp:0,powerGauge:100,combo:0,totalDamage:0,lastQTime:0,difficulty:null}
+};
 
-    let state = {
-        user: { xp: 0, level: 1 },
-        settings: { apiKey: '', prompt: '' },
-        badges: [],
-        history: [],
-        
-        // Battle State
-        battle: {
-            active: false, questions: [], currentIdx: 0,
-            inputStr: '', startTime: 0, timerInterval: null,
-            elapsed: 0, diff: null
-        }
-    };
+/* DB */
+const initDB=()=>new Promise((ok,no)=>{const r=indexedDB.open(DB,VER);r.onupgradeneeded=e=>{db=e.target.result;if(!db.objectStoreNames.contains('data'))db.createObjectStore('data');};r.onsuccess=e=>{db=e.target.result;ok();};r.onerror=no;});
+const dbG=k=>new Promise(r=>{const t=db.transaction('data','readonly');const q=t.objectStore('data').get(k);q.onsuccess=()=>r(q.result);});
+const dbP=(k,v)=>new Promise(r=>{const t=db.transaction('data','readwrite');t.objectStore('data').put(v,k).onsuccess=()=>r();});
+const load=async()=>{await initDB();for(const k of['user','settings','badges','history','defeated','records']){const v=await dbG(k);if(v)S[k]=v;}const c=await dbG('charData');if(c)CD=c;updHeader();};
+const save=async()=>{for(const k of['user','settings','badges','history','defeated','records'])await dbP(k,S[k]);await dbP('charData',CD);updHeader();};
 
-    // === DB Wrapper ===
-    const initDB = () => new Promise((resolve, reject) => {
-        const req = indexedDB.open(DB_NAME, DB_VER);
-        req.onupgradeneeded = e => {
-            db = e.target.result;
-            if(!db.objectStoreNames.contains('data')) {
-                db.createObjectStore('data');
-            }
-        };
-        req.onsuccess = e => { db = e.target.result; resolve(); };
-        req.onerror = e => reject(e);
-    });
+/* ===== PROGRESSION ENGINE ===== */
 
-    const dbGet = key => new Promise(res => {
-        const tx = db.transaction('data', 'readonly');
-        const req = tx.objectStore('data').get(key);
-        req.onsuccess = () => res(req.result);
-    });
-    
-    const dbPut = (key, val) => new Promise(res => {
-        const tx = db.transaction('data', 'readwrite');
-        const req = tx.objectStore('data').put(val, key);
-        req.onsuccess = () => res();
-    });
+// Star calculation: ★ = defeated, ★★ = acc≥90% & avgSpd≤6s, ★★★ = acc≥97% & avgSpd≤3s
+const calcStars=(acc,avgSpd,defeated)=>{
+    if(!defeated)return 0;
+    if(acc>=97 && avgSpd<=3)return 3;
+    if(acc>=90 && avgSpd<=6)return 2;
+    return 1;
+};
 
-    // === Core logic ===
-    const loadData = async () => {
-        await initDB();
-        const u = await dbGet('user'); if(u) state.user = u;
-        const s = await dbGet('settings'); if(s) state.settings = s;
-        const b = await dbGet('badges'); if(b) state.badges = b;
-        const h = await dbGet('history'); if(h) state.history = h;
-        updateHeader();
-    };
+// Speed rank
+const calcRank=avgSpd=>{
+    if(avgSpd<=2)return'S';if(avgSpd<=4)return'A';if(avgSpd<=7)return'B';if(avgSpd<=12)return'C';return'D';
+};
 
-    const saveData = async () => {
-        await dbPut('user', state.user);
-        await dbPut('settings', state.settings);
-        await dbPut('badges', state.badges);
-        await dbPut('history', state.history);
-        updateHeader();
-    };
+// Difficulty unlock check: need ≥1 star on ANY monster of previous difficulty
+const isDiffUnlocked=diffId=>{
+    const diffs=CD.difficulties.sort((a,b)=>(a.order||0)-(b.order||0));
+    const idx=diffs.findIndex(d=>d.id===diffId);
+    if(idx<=0)return true; // first difficulty always unlocked
+    const prevDiff=diffs[idx-1];
+    const prevMonsters=CD.monsters.filter(m=>m.difficulty===prevDiff.id);
+    return prevMonsters.some(m=>(S.records[m.id]?.stars||0)>=1);
+};
 
-    const calculateLevel = (xp) => Math.floor(xp / 1000) + 1;
-    
-    const updateHeader = () => {
-        const lvl = calculateLevel(state.user.xp);
-        state.user.level = lvl;
-        $('header-level').textContent = `Lvl ${lvl}`;
-        $('header-xp').textContent = `${state.user.xp.toLocaleString()} XP`;
-        
-        // Home View updates
-        if($('home-level-display')) {
-            $('home-level-display').textContent = `Level ${lvl}`;
-            const currentLevelXp = state.user.xp % 1000;
-            $('home-xp-text').textContent = `${currentLevelXp} / 1000 XP to Level ${lvl + 1}`;
-            $('home-xp-bar').style.width = `${(currentLevelXp / 1000) * 100}%`;
-        }
-    };
+// Get total stars
+const getTotalStars=()=>{
+    let earned=0,total=CD.monsters.length*3;
+    CD.monsters.forEach(m=>{earned+=(S.records[m.id]?.stars||0);});
+    return{earned,total};
+};
 
-    // === UI & Navigation ===
-    const nav = (viewId) => {
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        $(viewId + '-view').classList.add('active');
-        
-        // Nav bar highlights
-        document.querySelectorAll('.nav-item').forEach(n => {
-            n.classList.remove('bg-primary', 'text-white');
-            n.classList.add('text-slate-400');
-        });
-        const activeNav = $('nav-' + viewId);
-        if(activeNav) {
-            activeNav.classList.remove('text-slate-400');
-            activeNav.classList.add('bg-primary', 'text-white');
-        }
+// Overall rank (average of all best ranks)
+const getOverallRank=()=>{
+    const played=Object.values(S.records).filter(r=>r.bestAvgSpd);
+    if(!played.length)return'D';
+    const avg=played.reduce((s,r)=>s+r.bestAvgSpd,0)/played.length;
+    return calcRank(avg);
+};
 
-        if(viewId === 'setup') renderSetup();
-        if(viewId === 'history') renderHistory();
-        if(viewId === 'badges') renderBadges();
-        if(viewId === 'settings') renderSettings();
-        
-        window.scrollTo(0,0);
-    };
+// XP multiplier based on repeat plays (diminishing returns)
+const getXpMultiplier=monsterId=>{
+    const rec=S.records[monsterId];
+    if(!rec)return 1; // first play = full XP
+    if(rec.stars>=3)return 0.15; // already mastered = 15%
+    if(rec.stars>=2)return 0.4;  // 2 stars = 40%
+    if(rec.stars>=1)return 0.7;  // 1 star = 70%
+    return 1;
+};
 
-    // Setup Render
-    const renderSetup = () => {
-        const container = $('difficulty-selectors');
-        container.innerHTML = '';
-        DIFFICULTIES.forEach((d, i) => {
-            const btn = document.createElement('div');
-            btn.className = `p-4 border-2 rounded-2xl cursor-pointer text-center flex flex-col items-center transition-all ${i===0?'border-primary bg-primary/5':'border-outline-variant bg-surface'}`;
-            btn.onclick = () => {
-                Array.from(container.children).forEach(c=> { c.classList.remove('border-primary','bg-primary/5'); c.classList.add('border-outline-variant','bg-surface'); });
-                btn.classList.add('border-primary','bg-primary/5');
-                btn.classList.remove('border-outline-variant','bg-surface');
-                $('monster-preview').innerHTML = `<span class="text-2xl">${d.icon}</span> ${escapeHTML(d.name)} 出現（ボス: ${escapeHTML(d.boss)}）`;
-                container.dataset.selected = d.id;
-            };
-            btn.innerHTML = `<span class="text-3xl mb-1">${d.sprite}</span><span class="font-bold text-sm">${d.name}</span>`;
-            container.appendChild(btn);
-        });
-        container.children[0].click();
-    };
+// Stars HTML helper
+const starsHTML=(count,size='')=>{
+    let h='';
+    for(let i=0;i<3;i++) h+=`<span class="star ${size} ${i<count?'earned':'empty'}">★</span>`;
+    return h;
+};
 
-    // === Game Logic ===
-    const startBattle = () => {
-        const diffId = $('difficulty-selectors').dataset.selected || 'easy';
-        const diff = DIFFICULTIES.find(d => d.id === diffId);
-        
-        const ops = [];
-        if($('op-add').checked) ops.push('+');
-        if($('op-sub').checked) ops.push('-');
-        if($('op-mul').checked) ops.push('*');
-        if($('op-div').checked) ops.push('/');
-        if(ops.length === 0) return alert('魔法（演算）を一つ以上選んでください！');
-
-        const generateQ = () => {
-            const op = ops[Math.floor(Math.random() * ops.length)];
-            let a = Math.floor(Math.random() * (diff.ops[1] - diff.ops[0] + 1)) + diff.ops[0];
-            let b = Math.floor(Math.random() * (diff.ops[1] - diff.ops[0] + 1)) + diff.ops[0];
-            if(op === '-') { if(a < b) [a, b] = [b, a]; }
-            if(op === '/') { a = a * b; } // 割り切れるようにする
-            
-            let ans = 0;
-            if(op==='+') ans = a+b; if(op==='-') ans = a-b;
-            if(op==='*') ans = a*b; if(op==='/') ans = a/b;
-            
-            const displayOp = op==='*' ? '×' : op==='/' ? '÷' : op;
-            return { text: `${a} ${displayOp} ${b} =`, ans: ans, a, b, op };
-        };
-
-        const questions = [];
-        for(let i=0; i<100; i++) questions.push({...generateQ(), result: null, time: 0}); // 100問固定
-
-        state.battle = {
-            active: true, diff, questions, currentIdx: 0,
-            inputStr: '', elapsed: 0, lastQTime: Date.now()
-        };
-
-        $('monster-sprite').textContent = diff.sprite;
-        nav('battle');
-        updateBattleUI();
-
-        clearInterval(state.battle.timerInterval);
-        state.battle.timerInterval = setInterval(() => {
-            if(!document.hidden) {
-                state.battle.elapsed++;
-                $('battle-timer').textContent = formatTime(state.battle.elapsed);
-            }
-        }, 1000);
-    };
-
-    const updateBattleUI = () => {
-        const b = state.battle;
-        $('battle-progress').textContent = b.currentIdx + 1;
-        $('battle-question').textContent = b.questions[b.currentIdx].text;
-        $('battle-input').textContent = b.inputStr || ' ';
-        $('monster-name').textContent = `${b.diff.name}の魔物 ${b.currentIdx + 1}匹目`;
-        // HPバーは1問1匹なので常に満タンからスタート
-        $('monster-hp-bar').style.width = '100%';
-    };
-
-    const inputNum = (n) => {
-        if(state.battle.inputStr.length < 5) {
-            state.battle.inputStr += n;
-            $('battle-input').textContent = state.battle.inputStr;
-        }
-    };
-    const clearInput = () => { state.battle.inputStr = ''; $('battle-input').textContent = ' '; };
-    const deleteInput = () => { 
-        state.battle.inputStr = state.battle.inputStr.slice(0, -1);
-        $('battle-input').textContent = state.battle.inputStr || ' '; 
-    };
-
-    const submitAnswer = () => {
-        const b = state.battle;
-        if(!b.active || b.inputStr === '') return;
-
-        const q = b.questions[b.currentIdx];
-        const userAns = parseInt(b.inputStr, 10);
-        const isCorrect = userAns === q.ans;
-        const now = Date.now();
-        q.result = userAns;
-        q.isCorrect = isCorrect;
-        q.time = Math.round((now - b.lastQTime) / 1000); // seconds
-        b.lastQTime = now;
-
-        if(isCorrect) {
-            // 正解: モンスターにダメージ
-            $('monster-hp-bar').style.width = '0%';
-            const s = $('monster-sprite');
-            s.classList.add('flash-red', 'scale-50', 'opacity-0');
-            setTimeout(() => {
-                s.classList.remove('flash-red', 'scale-50', 'opacity-0');
-                nextQuestion();
-            }, 300);
-        } else {
-            // 不正解: モンスターが反撃
-            $('monster-sprite').classList.add('animate-attack');
-            setTimeout(() => $('monster-sprite').classList.remove('animate-attack'), 300);
-            document.body.classList.add('flash-red');
-            setTimeout(() => document.body.classList.remove('flash-red'), 400);
-            
-            // 少し待って次へ
-            setTimeout(nextQuestion, 500);
-        }
-    };
-
-    const nextQuestion = () => {
-        const b = state.battle;
-        b.currentIdx++;
-        b.inputStr = '';
-        if(b.currentIdx >= b.questions.length) {
-            finishBattle();
-        } else {
-            updateBattleUI();
-        }
-    };
-
-    const finishBattle = async () => {
-        clearInterval(state.battle.timerInterval);
-        const b = state.battle;
-        b.active = false;
-
-        const corrects = b.questions.filter(q => q.isCorrect).length;
-        const total = b.questions.length;
-        const accuracy = Math.round((corrects / total) * 100);
-        const xpEarned = corrects * b.diff.xpMulti;
-
-        // Update User
-        state.user.xp += xpEarned;
-        
-        // Check Badge Logic
-        let newBadge = null;
-        if(accuracy >= 80) { // 80%以上でバッジ判定
-            const badgeId = `badge_${b.diff.id}`;
-            const alreadyHas = state.badges.find(bg => bg.id === badgeId);
-            if(!alreadyHas) {
-                newBadge = { id: badgeId, name: `${b.diff.name}制覇`, diffId: b.diff.id, date: new Date().toISOString() };
-                state.badges.push(newBadge);
+/* ===== CORE ===== */
+const calcLvl=xp=>Math.floor(xp/1000)+1;
+const updHeader=()=>{
+    const l=calcLvl(S.user.xp);S.user.level=l;
+    $('header-level').textContent=`Lv.${l}`;$('header-xp').textContent=`${S.user.xp.toLocaleString()} XP`;
+    if($('home-level-display')){
+        $('home-level-display').textContent=`Level ${l}`;
+        const cx=S.user.xp%1000;$('home-xp-text').textContent=`${cx} / 1000 XP to Level ${l+1}`;
+        $('home-xp-bar').style.width=`${(cx/1000)*100}%`;
+        // Stars
+        const{earned,total}=getTotalStars();
+        $('home-star-text').textContent=`${earned}/${total}`;
+        $('home-star-bar').style.width=`${total?((earned/total)*100):0}%`;
+        // Overall rank
+        const oRank=getOverallRank();
+        const rb=$('home-best-rank');rb.textContent=oRank;rb.className=`rank-badge rank-${oRank}`;
+        // Unlock hint
+        const hint=$('home-unlock-hint'),htxt=$('unlock-hint-text');
+        const diffs=CD.difficulties.sort((a,b)=>(a.order||0)-(b.order||0));
+        let shown=false;
+        for(let i=1;i<diffs.length;i++){
+            if(!isDiffUnlocked(diffs[i].id)){
+                hint.classList.remove('hidden');shown=true;
+                htxt.textContent=`🔓「${diffs[i].name}」を開放するには「${diffs[i-1].name}」のモンスターを1体倒そう！`;
+                break;
             }
         }
+        if(!shown)hint.classList.add('hidden');
+    }
+};
 
-        // Save History
-        const record = {
-            id: Date.now(),
-            date: new Date().toISOString(),
-            diffName: b.diff.name,
-            score: corrects,
-            total,
-            accuracy,
-            timeSec: b.elapsed,
-            xp: xpEarned,
-            details: b.questions
-        };
-        state.history.unshift(record);
-        if(state.history.length > 50) state.history.pop(); // limit
-        await saveData();
+/* NAV */
+const nav=v=>{document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));$(v+'-view').classList.add('active');document.querySelectorAll('.nav-pill').forEach(n=>n.classList.remove('active'));const an=$('nav-'+v);if(an)an.classList.add('active');
+    if(v==='setup')renderSetup();if(v==='history')renderHistory();if(v==='badges')renderBadges();if(v==='settings')renderSettings();if(v==='encyclopedia')renderEncy();if(v==='home')updHeader();window.scrollTo(0,0);};
 
-        renderResult(record, b.diff, newBadge);
-        nav('result');
-    };
-
-    // === Result Render ===
-    const renderResult = (record, diff, newBadge) => {
-        $('result-xp').textContent = `+${record.xp} XP`;
-        $('result-accuracy').textContent = `${record.accuracy}%`;
-        $('result-time').textContent = formatTime(record.timeSec);
-        $('result-boss-name').textContent = `Lv.${calculateLevel(state.user.xp)} ${diff.boss} 討伐`;
-        $('result-monster-icon').textContent = diff.sprite;
-
-        // Badge Overlay
-        const badgeOverlay = $('badge-earned-overlay');
-        if(newBadge) {
-            $('badge-name-display').textContent = newBadge.name;
-            badgeOverlay.classList.remove('hidden');
-            setTimeout(() => badgeOverlay.classList.add('hidden'), 4000);
-        } else {
-            badgeOverlay.classList.add('hidden');
+/* SETUP */
+let selDiff=null,selMon=null;
+const renderSetup=()=>{
+    const c=$('difficulty-selectors');c.innerHTML='';
+    const diffs=CD.difficulties.sort((a,b)=>(a.order||0)-(b.order||0));
+    diffs.forEach((d,i)=>{
+        const unlocked=isDiffUnlocked(d.id);
+        const cnt=CD.monsters.filter(m=>m.difficulty===d.id).length;
+        const monStars=CD.monsters.filter(m=>m.difficulty===d.id).reduce((s,m)=>s+(S.records[m.id]?.stars||0),0);
+        const maxStars=cnt*3;
+        const b=document.createElement('div');
+        b.className=`p-3 rounded-2xl text-center border-2 transition-all ${unlocked?'cursor-pointer':'locked-overlay cursor-not-allowed'} ${i===0&&unlocked?'border-rose bg-rose-light/40':'border-sand bg-white'}`;
+        if(unlocked){
+            b.onclick=()=>{Array.from(c.children).forEach(x=>{x.classList.remove('border-rose','bg-rose-light/40');x.classList.add('border-sand','bg-white');});b.classList.add('border-rose','bg-rose-light/40');b.classList.remove('border-sand','bg-white');selDiff=d;renderMonSel(d.id);};
         }
+        b.innerHTML=`<span class="text-2xl block mb-1">${d.icon}</span><span class="font-display text-xs font-black block">${esc(d.name)}</span><span class="text-[10px] text-bark-light">${cnt}体</span><div class="mt-1 text-[10px]">${starsHTML(0).replace(/★/g,'')}${monStars>0?`<span class="text-amber font-bold">${monStars}/${maxStars}⭐</span>`:`<span class="text-pebble">${monStars}/${maxStars}⭐</span>`}</div>`;
+        c.appendChild(b);
+    });
+    // Auto-select first unlocked
+    const firstUnlocked=diffs.findIndex(d=>isDiffUnlocked(d.id));
+    if(firstUnlocked>=0&&c.children[firstUnlocked])c.children[firstUnlocked].click();
+};
 
-        // Accuracy Matrix (動的生成)
-        const mx = $('accuracy-matrix');
-        mx.innerHTML = '';
-        record.details.forEach(q => {
-            const el = document.createElement('div');
-            el.className = `aspect-square rounded-md ${q.isCorrect ? 'bg-primary' : 'bg-error-container'}`;
-            mx.appendChild(el);
-        });
-
-        // Time Chart (簡単な棒グラフ)
-        const chart = $('time-chart');
-        chart.innerHTML = '';
-        const maxTime = Math.max(...record.details.map(q => q.time), 1); // ゼロ除算防止
-        record.details.forEach(q => {
-            const h = Math.max((q.time / maxTime) * 100, 5); // min 5%
-            const bar = document.createElement('div');
-            bar.className = `w-full rounded-t-sm ${q.isCorrect ? 'bg-primary-container' : 'bg-error-container'}`;
-            bar.style.height = `${h}%`;
-            chart.appendChild(bar);
-        });
-
-        // Error Reviews
-        const errSec = $('review-errors-section');
-        const errCards = $('error-cards');
-        errCards.innerHTML = '';
-        const errors = record.details.map((q, i) => ({...q, num: i+1})).filter(q => !q.isCorrect);
-        
-        if(errors.length === 0) {
-            errSec.classList.add('hidden');
-        } else {
-            errSec.classList.remove('hidden');
-            errors.slice(0, 4).forEach(err => { // 最大4つ表示
-                errCards.innerHTML += `
-                    <div class="bg-surface-container-lowest rounded-3xl p-6 flex items-center justify-between shadow-sm">
-                        <div class="space-y-1">
-                            <span class="font-label text-xs text-error font-medium">Question #${err.num}</span>
-                            <div class="font-headline text-2xl font-bold">${escapeHTML(err.text)} <span class="text-error-container">${err.ans}</span></div>
-                        </div>
-                        <div class="text-right">
-                            <span class="block text-xs font-label text-outline">Your Answer</span>
-                            <span class="font-headline text-lg font-bold text-on-surface-variant strike-through decoration-error">${err.result}</span>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-    };
-
-    // === History Render ===
-    const renderHistory = () => {
-        const list = $('history-list');
-        list.innerHTML = state.history.length === 0 ? '<p class="text-center text-outline">履歴がありません</p>' : '';
-        
-        state.history.forEach(h => {
-            const d = new Date(h.date).toLocaleDateString();
-            list.innerHTML += `
-                <div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm border border-surface-container hover:bg-surface-container transition-colors cursor-pointer" onclick="alert('詳細ビューは拡張予定です。\\nスコア: ${h.score}/${h.total}\\n時間: ${formatTime(h.timeSec)}')">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="font-bold">${escapeHTML(h.diffName)}</span>
-                        <span class="text-xs text-outline">${d}</span>
-                    </div>
-                    <div class="flex gap-4 text-sm">
-                        <span class="text-primary font-bold">正答率: ${h.accuracy}%</span>
-                        <span class="text-on-surface-variant">時間: ${formatTime(h.timeSec)}</span>
-                        <span class="text-primary-container">+${h.xp}XP</span>
-                    </div>
+const renderMonSel=diffId=>{
+    const area=$('monster-select-area'),c=$('monster-selectors');
+    const mons=CD.monsters.filter(m=>m.difficulty===diffId);
+    if(!mons.length){area.classList.add('hidden');selMon=null;return;}
+    area.classList.remove('hidden');c.innerHTML='';
+    mons.forEach((m,i)=>{
+        const rec=S.records[m.id]||{stars:0,bestAcc:0,bestTime:0,bestAvgSpd:0,bestRank:'',plays:0};
+        const xpMul=getXpMultiplier(m.id);
+        const card=document.createElement('div');
+        card.className=`card p-3 flex items-center gap-3 cursor-pointer border-2 transition-all ${i===0?'border-rose card-glow':'border-transparent'}`;
+        card.onclick=()=>{Array.from(c.children).forEach(x=>{x.classList.remove('border-rose','card-glow');x.classList.add('border-transparent');});card.classList.add('border-rose','card-glow');card.classList.remove('border-transparent');selMon=m;};
+        card.innerHTML=`
+            <span class="text-3xl">${m.sprite}</span>
+            <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                    <span class="font-display text-sm font-black">${esc(m.name)}</span>
+                    ${rec.bestRank?`<span class="rank-badge rank-${rec.bestRank} !w-5 !h-5 !text-[10px] !rounded-md">${rec.bestRank}</span>`:''}
                 </div>
-            `;
-        });
-    };
-
-    // === Badges Render ===
-    const renderBadges = () => {
-        const list = $('badges-list');
-        list.innerHTML = '';
-        DIFFICULTIES.forEach(d => {
-            const bId = `badge_${d.id}`;
-            const hasBadge = state.badges.find(b => b.id === bId);
-            
-            const div = document.createElement('div');
-            div.className = `aspect-square rounded-3xl p-4 flex flex-col items-center justify-center text-center shadow-sm ${hasBadge ? 'bg-gradient-to-br from-yellow-300 to-yellow-500 text-white' : 'bg-surface-container text-outline'}`;
-            
-            div.innerHTML = `
-                <span class="material-symbols-outlined text-4xl mb-2 ${hasBadge?'':'opacity-30'}" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
-                <span class="font-bold text-sm ${hasBadge?'':'opacity-50'}">${hasBadge ? escapeHTML(d.name) + '制覇' : '???'}</span>
-            `;
-            list.appendChild(div);
-        });
-    };
-
-    // === Settings & Data Mgmt ===
-    const renderSettings = () => {
-        $('setting-api-key').value = state.settings.apiKey || '';
-        $('setting-prompt').value = state.settings.prompt || 'You are an encouraging AI tutor for elementary kids.';
-    };
-
-    const saveSettings = async () => {
-        state.settings.apiKey = $('setting-api-key').value;
-        state.settings.prompt = $('setting-prompt').value;
-        await saveData();
-        alert('設定を保存しました。');
-    };
-
-    const exportData = () => {
-        const dataStr = JSON.stringify(state);
-        const blob = new Blob([dataStr], { type: "application/json" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `MathBattle_Backup_${new Date().getTime()}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-    };
-
-    const importData = async (e) => {
-        const file = e.target.files[0];
-        if(!file) return;
-        const reader = new FileReader();
-        reader.onload = async (ev) => {
-            try {
-                const parsed = JSON.parse(ev.target.result);
-                if(parsed.user && parsed.user.xp !== undefined) {
-                    state = parsed;
-                    await saveData();
-                    alert('データをインポートしました。');
-                    nav('home');
-                } else { throw new Error(); }
-            } catch(err) {
-                alert('無効なファイル形式です。');
-            }
-        };
-        reader.readAsText(file);
-    };
-
-    // Page Visibility API (Pause/Resume)
-    document.addEventListener("visibilitychange", () => {
-        if (state.battle.active) {
-            if (document.hidden) {
-                clearInterval(state.battle.timerInterval);
-            } else {
-                state.battle.lastQTime = Date.now(); // Resume from now
-                state.battle.timerInterval = setInterval(() => {
-                    state.battle.elapsed++;
-                    $('battle-timer').textContent = formatTime(state.battle.elapsed);
-                }, 1000);
-            }
-        }
+                <div class="flex items-center gap-1 mt-0.5">${starsHTML(rec.stars)}</div>
+                <div class="flex gap-2 text-[10px] text-bark-light mt-0.5 font-bold flex-wrap">
+                    <span>HP ${m.hp}</span>
+                    ${rec.plays>0?`<span class="text-pebble">${rec.plays}回挑戦</span>`:''}
+                    ${rec.bestAcc>0?`<span class="text-mint">最高${rec.bestAcc}%</span>`:''}
+                    ${rec.bestAvgSpd>0?`<span class="text-ocean">最速${rec.bestAvgSpd}s/問</span>`:''}
+                </div>
+                ${xpMul<1?`<div class="text-[9px] text-pebble mt-0.5">XP ${Math.round(xpMul*100)}%（${rec.stars>=3?'マスターずみ':rec.stars>=2?'★★達成':'★達成'}）</div>`:''}
+            </div>`;
+        c.appendChild(card);
     });
+    if(c.children[0])c.children[0].click();
+};
 
-    // === PWA Setup ===
-    const setupPWA = () => {
-        // Manifest
-        const manifest = {
-            name: "MathBattle", short_name: "MathBattle",
-            start_url: ".", display: "standalone",
-            background_color: "#f7f9fb", theme_color: "#0053dc",
-            icons: [{ src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>", sizes: "192x192", type: "image/svg+xml" }]
-        };
-        $('manifest-link').href = 'data:application/manifest+json;charset=utf-8,' + encodeURIComponent(JSON.stringify(manifest));
+/* BATTLE */
+const startBattle=()=>{
+    if(!selMon||!selDiff)return alert('モンスターをえらんでね！');
+    const ops=[];if($('op-add').checked)ops.push('+');if($('op-sub').checked)ops.push('-');if($('op-mul').checked)ops.push('*');if($('op-div').checked)ops.push('/');
+    if(!ops.length)return alert('えんざんを１つ以上えらんでね！');
+    const m=selMon,rng=m.operandRange;
+    const genQ=()=>{const op=ops[Math.floor(Math.random()*ops.length)];let a=Math.floor(Math.random()*(rng[1]-rng[0]+1))+rng[0],b=Math.floor(Math.random()*(rng[1]-rng[0]+1))+rng[0];if(op==='-'){if(a<b)[a,b]=[b,a];}if(op==='/'){b=Math.max(b,1);a=a*b;}let ans=0;if(op==='+')ans=a+b;if(op==='-')ans=a-b;if(op==='*')ans=a*b;if(op==='/')ans=Math.floor(a/b);return{text:`${a} ${op==='*'?'×':op==='/'?'÷':op} ${b} =`,ans,a,b,op};};
+    const qs=[];for(let i=0;i<100;i++)qs.push({...genQ(),result:null,time:0,isCorrect:false,damage:0});
+    S.battle={active:true,monster:m,questions:qs,currentIdx:0,inputStr:'',elapsed:0,lastQTime:Date.now(),timerInterval:null,bossMaxHp:m.hp,bossCurrentHp:m.hp,powerGauge:100,combo:0,totalDamage:0,difficulty:selDiff};
+    $('monster-sprite').textContent=m.sprite;$('monster-name').textContent=`${m.name}（${m.origin||''}）`;$('boss-name-bar').textContent=`${m.name} HP`;
+    nav('battle');updBUI();updGauge();updHP();
+    clearInterval(S.battle.timerInterval);S.battle.timerInterval=setInterval(()=>{if(!document.hidden){S.battle.elapsed++;$('battle-timer').textContent=fmt(S.battle.elapsed);}},1000);
+};
 
-        // SW
-        if ('serviceWorker' in navigator) {
-            const swCode = `
-                self.addEventListener('install', e => self.skipWaiting());
-                self.addEventListener('activate', e => self.clients.claim());
-                self.addEventListener('fetch', e => {}); // offline mock
-            `;
-            const blob = new Blob([swCode], {type: 'application/javascript'});
-            navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>console.log('SW init failed.'));
+const updBUI=()=>{const b=S.battle;$('battle-progress').textContent=b.currentIdx+1;$('battle-question').textContent=b.questions[b.currentIdx].text;$('battle-input').innerHTML=b.inputStr||'&nbsp;';};
+const updHP=()=>{const b=S.battle,pct=Math.max(0,(b.bossCurrentHp/b.bossMaxHp)*100);$('monster-hp-bar').style.width=`${pct}%`;$('boss-hp-text').textContent=`${Math.ceil(pct)}%`;const bar=$('monster-hp-bar');bar.className=pct>50?'hp-fill bg-gradient-to-r from-rose to-rose/60':pct>25?'hp-fill bg-gradient-to-r from-amber to-amber/60':'hp-fill bg-gradient-to-r from-red-500 to-red-400';};
+const updGauge=()=>{const b=S.battle,g=$('power-gauge-fill'),l=$('power-gauge-label');g.style.width=`${b.powerGauge}%`;l.textContent=`${Math.round(b.powerGauge)}%`;g.classList.remove('gauge-low','gauge-mid','gauge-high','gauge-max');g.classList.add(b.powerGauge>=80?'gauge-max':b.powerGauge>=50?'gauge-high':b.powerGauge>=25?'gauge-mid':'gauge-low');
+    const cd=$('combo-display');if(b.combo>=2){cd.classList.remove('hidden');$('combo-count').textContent=b.combo;}else cd.classList.add('hidden');
+    $('damage-preview').textContent=`よそうダメージ: ~${calcDmg(b.powerGauge,b.combo,3)}`;};
+
+const calcDmg=(gauge,combo,spd)=>{const m=S.battle.monster,base=m.hp/100;let sm=spd<=2?2.5:spd<=3?2:spd<=5?1.5:spd<=10?1:spd<=20?.7:.5;return Math.max(1,Math.round(base*sm*(1+Math.min(combo*.05,1))*(gauge/100)*Math.max(.3,1-m.defense/100)));};
+const showPop=(dmg,ok)=>{const a=$('monster-area'),p=document.createElement('div');p.className='dmg-popup';p.style.left=`${35+Math.random()*30}%`;p.style.top='25%';if(ok){p.style.color=dmg>(S.battle.monster.hp/50)?'#9b7fd4':'#e8788a';p.style.fontSize=dmg>(S.battle.monster.hp/50)?'2.2rem':'1.6rem';p.textContent=`-${dmg}`;}else{p.style.color='#c4b5a5';p.style.fontSize='1.3rem';p.textContent='MISS!';}a.appendChild(p);setTimeout(()=>p.remove(),1000);};
+
+const inputNum=n=>{if(S.battle.inputStr.length<6){S.battle.inputStr+=n;$('battle-input').textContent=S.battle.inputStr;}};
+const clearInput=()=>{S.battle.inputStr='';$('battle-input').innerHTML='&nbsp;';};
+const deleteInput=()=>{S.battle.inputStr=S.battle.inputStr.slice(0,-1);$('battle-input').innerHTML=S.battle.inputStr||'&nbsp;';};
+
+const submitAnswer=()=>{
+    const b=S.battle;if(!b.active||b.inputStr==='')return;
+    const q=b.questions[b.currentIdx],ua=parseInt(b.inputStr,10),ok=ua===q.ans,now=Date.now(),spd=Math.round((now-b.lastQTime)/1000);
+    q.result=ua;q.isCorrect=ok;q.time=spd;b.lastQTime=now;$('speed-indicator').textContent=`スピード: ${spd}秒`;
+    if(ok){b.combo++;const dmg=calcDmg(b.powerGauge,b.combo,spd);q.damage=dmg;b.totalDamage+=dmg;b.bossCurrentHp=Math.max(0,b.bossCurrentHp-dmg);b.powerGauge=Math.min(100,b.powerGauge+3);if(spd<=3)b.powerGauge=Math.min(100,b.powerGauge+5);showPop(dmg,true);$('monster-sprite').classList.add('animate-hit-flash');setTimeout(()=>{$('monster-sprite').classList.remove('animate-hit-flash');updHP();updGauge();nextQ();},350);}
+    else{b.combo=0;q.damage=0;b.powerGauge=Math.max(0,b.powerGauge-15);showPop(0,false);$('monster-sprite').classList.add('animate-attack');document.body.style.animation='shake .45s';setTimeout(()=>{$('monster-sprite').classList.remove('animate-attack');document.body.style.animation='';updGauge();nextQ();},500);}
+};
+
+const nextQ=()=>{const b=S.battle;b.currentIdx++;b.inputStr='';if(b.bossCurrentHp<=0){finish(true);return;}if(b.currentIdx>=b.questions.length)finish(b.bossCurrentHp<=0);else updBUI();};
+
+const finish=async(won)=>{
+    clearInterval(S.battle.timerInterval);const b=S.battle;b.active=false;
+    const answered=b.questions.filter(q=>q.result!==null),okCount=answered.filter(q=>q.isCorrect).length;
+    const total=answered.length,acc=total?Math.round((okCount/total)*100):0;
+    const okTimes=answered.filter(q=>q.isCorrect).map(q=>q.time);
+    const avgSpd=okTimes.length?Math.round((okTimes.reduce((s,t)=>s+t,0)/okTimes.length)*10)/10:99;
+    const stars=calcStars(acc,avgSpd,won);
+    const rank=calcRank(avgSpd);
+    const diff=b.difficulty;
+
+    // XP with diminishing returns
+    const xpMul=getXpMultiplier(b.monster.id);
+    const baseXp=won?b.monster.xpReward+(okCount*diff.xpMulti):Math.floor(okCount*diff.xpMulti*0.5);
+    const xp=Math.round(baseXp*xpMul);
+    S.user.xp+=xp;
+
+    // Defeated
+    if(won&&!S.defeated.includes(b.monster.id))S.defeated.push(b.monster.id);
+
+    // Update personal records
+    const prev=S.records[b.monster.id]||{stars:0,bestAcc:0,bestTime:Infinity,bestAvgSpd:Infinity,bestRank:'D',plays:0};
+    const isPB=acc>prev.bestAcc||(avgSpd<prev.bestAvgSpd&&won);
+    const newRec={
+        stars:Math.max(prev.stars,stars),
+        bestAcc:Math.max(prev.bestAcc,acc),
+        bestTime:won?Math.min(prev.bestTime===Infinity?9999:prev.bestTime,b.elapsed):prev.bestTime,
+        bestAvgSpd:okTimes.length?Math.min(prev.bestAvgSpd===Infinity?99:prev.bestAvgSpd,avgSpd):prev.bestAvgSpd,
+        bestRank:['S','A','B','C','D'].indexOf(rank)<['S','A','B','C','D'].indexOf(prev.bestRank||'D')?rank:(prev.bestRank||'D'),
+        plays:(prev.plays||0)+1
+    };
+    S.records[b.monster.id]=newRec;
+
+    // Check if new difficulty unlocked
+    let newUnlock=null;
+    const diffs=CD.difficulties.sort((a,b)=>(a.order||0)-(b.order||0));
+    for(let i=1;i<diffs.length;i++){
+        if(isDiffUnlocked(diffs[i].id)){
+            // Was it locked before this battle? Check if prev stars was 0 for all in this diff
+            const prevDiffMons=CD.monsters.filter(m=>m.difficulty===diffs[i-1].id);
+            const prevSum=prevDiffMons.reduce((s,m)=>{
+                const r=S.records[m.id];
+                // Only count current monster's OLD stars
+                if(m.id===b.monster.id)return s+(prev.stars||0);
+                return s+(r?.stars||0);
+            },0);
+            if(prevSum===0&&stars>=1)newUnlock=diffs[i];
         }
-    };
+    }
 
-    // Init
-    window.onload = async () => {
-        setupPWA();
-        await loadData();
-        nav('home');
-    };
+    // Badge
+    let nb=null;
+    if(won&&b.monster.badge){const bid=b.monster.badge.id;if(!S.badges.find(x=>x.id===bid)){nb={id:bid,name:b.monster.badge.name,monsterId:b.monster.id,date:new Date().toISOString()};S.badges.push(nb);}}
 
-    return { nav, startBattle, inputNum, clearInput, deleteInput, submitAnswer, exportData, importData, saveSettings };
+    const rec={id:Date.now(),date:new Date().toISOString(),monsterId:b.monster.id,monsterName:b.monster.name,diffName:diff.name,score:okCount,total,accuracy:acc,timeSec:b.elapsed,xp,totalDamage:b.totalDamage,bossDefeated:won,bossHpRemaining:b.bossCurrentHp,bossMaxHp:b.bossMaxHp,stars,rank,avgSpd,details:answered};
+    S.history.unshift(rec);if(S.history.length>50)S.history.pop();await save();
+    renderResult(rec,b.monster,nb,won,stars,rank,avgSpd,isPB,xpMul,newUnlock);nav('result');
+};
+
+/* RESULT */
+const renderResult=(rec,mon,nb,won,stars,rank,avgSpd,isPB,xpMul,newUnlock)=>{
+    $('result-xp').textContent=`+${rec.xp}`;$('result-accuracy').textContent=`${rec.accuracy}%`;$('result-time').textContent=fmt(rec.timeSec);$('result-total-damage').textContent=rec.totalDamage.toLocaleString();
+    $('result-monster-icon').textContent=mon.sprite;$('result-boss-name').textContent=`${mon.name}（HP:${mon.hp}）`;
+    $('result-avg-speed').textContent=`平均 ${avgSpd}秒/問`;
+
+    // Stars
+    const stDiv=$('result-stars');stDiv.innerHTML='';
+    for(let i=0;i<3;i++){const s=document.createElement('span');s.className=`star star-lg ${i<stars?'earned':'empty'}`;s.textContent='★';if(i<stars)s.style.animationDelay=`${i*0.2}s`;stDiv.appendChild(s);}
+
+    // Rank
+    const rEl=$('result-rank');rEl.textContent=rank;rEl.className=`rank-badge rank-${rank} text-xl !w-12 !h-12 !rounded-xl !text-lg`;
+
+    // XP note
+    const xpNote=$('result-xp-note');
+    if(xpMul<1){xpNote.classList.remove('hidden');xpNote.textContent=`💡 このモンスターは★${S.records[mon.id]?.stars||0}達成済みのため、XPが${Math.round(xpMul*100)}%になっています。より難しいモンスターに挑戦しよう！`;}
+    else xpNote.classList.add('hidden');
+
+    // PB
+    $('result-pb').classList.toggle('hidden',!isPB);
+
+    if(won){$('result-title').textContent='VICTORY!';$('result-subtitle').textContent=`${mon.name}を撃破しました！`;$('result-status-badge').className='inline-flex items-center gap-1 px-3 py-1 rounded-full bg-mint-light text-mint font-display text-xs font-bold mb-3';$('result-status-badge').innerHTML='✨ BOSS DEFEATED';$('result-boss-title').textContent='撃破成功！';$('result-boss-hp-remaining').style.width='0%';$('result-boss-hp-text').textContent=`HP: 0 / ${mon.hp}`;}
+    else{$('result-title').textContent='ざんねん...';$('result-subtitle').textContent=`${mon.name}を倒しきれませんでした`;$('result-status-badge').className='inline-flex items-center gap-1 px-3 py-1 rounded-full bg-rose-light text-rose font-display text-xs font-bold mb-3';$('result-status-badge').innerHTML='💔 MISSION FAILED';$('result-boss-title').textContent='撃破失敗...';const rp=Math.round((rec.bossHpRemaining/rec.bossMaxHp)*100);$('result-boss-hp-remaining').style.width=`${rp}%`;$('result-boss-hp-text').textContent=`のこりHP: ${rec.bossHpRemaining} / ${rec.bossMaxHp}`;}
+
+    // Unlock message
+    const umsg=$('result-unlock-msg');
+    if(newUnlock){umsg.classList.remove('hidden');umsg.innerHTML=`🎊 <strong>「${esc(newUnlock.name)}」が開放されました！</strong><br>新しいモンスターに会いに行こう！`;}else umsg.classList.add('hidden');
+
+    // Badge
+    const bo=$('badge-earned-overlay');if(nb){$('badge-name-display').textContent=nb.name;bo.classList.remove('hidden');setTimeout(()=>bo.classList.add('hidden'),4000);}else bo.classList.add('hidden');
+
+    // Matrix
+    const mx=$('accuracy-matrix');mx.innerHTML='';rec.details.forEach(q=>{const e=document.createElement('div');e.className=`aspect-square rounded-sm ${q.isCorrect?'bg-mint':'bg-rose'}`;mx.appendChild(e);});for(let i=rec.details.length;i<100;i++){const e=document.createElement('div');e.className='aspect-square rounded-sm bg-sand/40';mx.appendChild(e);}
+
+    // Chart
+    const ch=$('time-chart');ch.innerHTML='';const mt=Math.max(...rec.details.map(q=>q.time),1);rec.details.forEach(q=>{const h=Math.max((q.time/mt)*100,4);const bar=document.createElement('div');bar.className=`w-full rounded-t-sm ${q.isCorrect?'bg-mint/70':'bg-rose/70'}`;bar.style.height=`${h}%`;ch.appendChild(bar);});
+
+    // Errors
+    const es=$('review-errors-section'),ec=$('error-cards');ec.innerHTML='';const errs=rec.details.map((q,i)=>({...q,num:i+1})).filter(q=>!q.isCorrect);
+    if(!errs.length)es.classList.add('hidden');else{es.classList.remove('hidden');errs.slice(0,6).forEach(e=>{ec.innerHTML+=`<div class="card p-4 flex items-center justify-between"><div><span class="text-[10px] font-bold text-rose">Q${e.num}</span><div class="font-display text-lg font-black">${esc(e.text)} <span class="text-mint">${e.ans}</span></div></div><div class="text-right"><span class="text-[10px] text-bark-light block">あなたの答え</span><span class="font-display font-black text-bark-light line-through decoration-rose">${e.result}</span></div></div>`;});}
+};
+
+/* ENCYCLOPEDIA */
+const renderEncy=()=>{
+    const list=$('encyclopedia-list');list.innerHTML='';$('encyclopedia-progress').textContent=`はっけん: ${S.defeated.length} / ${CD.monsters.length} 体`;
+    CD.monsters.forEach(m=>{
+        const found=S.defeated.includes(m.id),diff=CD.difficulties.find(d=>d.id===m.difficulty),rec=S.records[m.id]||{stars:0};
+        const card=document.createElement('div');card.className=`monster-card card p-5 ${!found?'undiscovered':''}`;
+        card.innerHTML=`<div class="flex items-center gap-3 mb-3"><div class="sprite-wrap w-14 h-14 rounded-2xl ${found?'bg-gradient-to-br from-amber-light to-rose-light':'bg-sand/40'} flex items-center justify-center shrink-0"><span class="text-3xl">${found?m.sprite:'❓'}</span></div><div class="flex-1 min-w-0"><div class="flex items-center gap-2"><h3 class="font-display font-black text-base ${!found?'text-pebble':''}">${found?esc(m.name):'？？？'}</h3>${found&&rec.bestRank?`<span class="rank-badge rank-${rec.bestRank} !w-5 !h-5 !text-[10px] !rounded-md">${rec.bestRank}</span>`:''}</div><div class="flex items-center gap-2 flex-wrap">${diff?`<span class="text-[10px] font-bold px-2 py-0.5 rounded-full" style="background:${diff.color}15;color:${diff.color}">${esc(diff.name)}</span>`:''}<span class="text-[10px]">${starsHTML(rec.stars||0)}</span></div></div></div>${found?`<p class="text-xs text-bark-light mb-3 leading-relaxed">${esc(m.description)}</p><div class="grid grid-cols-4 gap-1.5 text-[10px]"><div class="bg-rose-light/50 rounded-lg p-2 text-center"><span class="block text-bark-light">HP</span><span class="font-display font-black text-rose">${m.hp}</span></div><div class="bg-amber-light/50 rounded-lg p-2 text-center"><span class="block text-bark-light">ATK</span><span class="font-display font-black text-amber">${m.attack}</span></div><div class="bg-ocean-light/50 rounded-lg p-2 text-center"><span class="block text-bark-light">DEF</span><span class="font-display font-black text-ocean">${m.defense}</span></div><div class="bg-mint-light/50 rounded-lg p-2 text-center"><span class="block text-bark-light">XP</span><span class="font-display font-black text-mint">${m.xpReward}</span></div></div>${rec.plays?`<div class="mt-2 text-[10px] text-bark-light">挑戦${rec.plays}回 ｜ 最高${rec.bestAcc||0}% ｜ 最速${rec.bestAvgSpd||'--'}s/問</div>`:''}`:`<p class="text-xs text-pebble italic">まだ見つけていない妖怪です。たおすと図鑑にのるよ！</p>`}`;
+        list.appendChild(card);
+    });
+};
+
+/* HISTORY */
+const renderHistory=()=>{const l=$('history-list');l.innerHTML=S.history.length===0?'<p class="text-center text-pebble text-sm py-8">まだきろくがありません</p>':'';S.history.forEach(h=>{const d=new Date(h.date).toLocaleDateString('ja-JP');l.innerHTML+=`<div class="card p-4"><div class="flex justify-between items-center mb-1.5"><div class="flex items-center gap-2"><span class="font-display font-black text-sm">${esc(h.monsterName||h.diffName)}</span>${h.bossDefeated?'<span class="text-[9px] bg-mint-light text-mint px-1.5 py-0.5 rounded-full font-bold">撃破</span>':'<span class="text-[9px] bg-rose-light text-rose px-1.5 py-0.5 rounded-full font-bold">失敗</span>'}${h.rank?`<span class="rank-badge rank-${h.rank} !w-4 !h-4 !text-[8px] !rounded">${h.rank}</span>`:''}</div><span class="text-[10px] text-pebble">${d}</span></div><div class="flex gap-1 mb-1">${starsHTML(h.stars||0)}</div><div class="flex gap-3 text-[11px] font-bold flex-wrap"><span class="text-mint">正答率 ${h.accuracy}%</span><span class="text-bark-light">${fmt(h.timeSec)}</span><span class="text-ocean">${h.avgSpd||'--'}s/問</span><span class="text-amber">+${h.xp}XP</span></div></div>`;});};
+
+/* BADGES */
+const renderBadges=()=>{const l=$('badges-list');l.innerHTML='';CD.monsters.forEach(m=>{if(!m.badge)return;const has=S.badges.find(b=>b.id===m.badge.id);const d=document.createElement('div');d.className=`card p-4 flex flex-col items-center justify-center text-center aspect-square ${has?'bg-gradient-to-br from-amber-light to-amber/30':''}`;d.innerHTML=`<span class="text-3xl mb-1.5">${has?(m.badge.icon||'🏅'):'❓'}</span><span class="font-display text-[10px] font-black ${has?'':'text-pebble'}">${has?esc(m.badge.name):'???'}</span>`;l.appendChild(d);});};
+
+/* SETTINGS */
+const renderSettings=()=>{$('setting-api-key').value=S.settings.apiKey||'';$('setting-prompt').value=S.settings.prompt||'You are an encouraging AI tutor for elementary kids.';};
+const saveSettings=async()=>{S.settings.apiKey=$('setting-api-key').value;S.settings.prompt=$('setting-prompt').value;await save();alert('保存しました！');};
+const exportData=()=>{const b=new Blob([JSON.stringify({...S,charData:CD})],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=`MathBattle_${Date.now()}.json`;a.click();URL.revokeObjectURL(u);};
+const importData=async e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=async ev=>{try{const p=JSON.parse(ev.target.result);if(p.user&&p.user.xp!==undefined){S=p;if(p.charData)CD=p.charData;await save();alert('インポートしました！');nav('home');}else throw 0;}catch{alert('無効なファイルです');}};r.readAsText(f);};
+const importCharacters=async e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=async ev=>{try{const p=JSON.parse(ev.target.result);if(p.monsters&&Array.isArray(p.monsters)&&p.difficulties){for(const m of p.monsters)if(!m.id||!m.name||!m.sprite||!m.hp)throw new Error('データ不足');CD=p;await dbP('charData',CD);alert(`インポート完了！ ${p.monsters.length}体のモンスター`);}else throw new Error('形式エラー');}catch(err){alert('character.jsonが無効です: '+err.message);}};r.readAsText(f);e.target.value='';};
+const resetCharacters=async()=>{if(confirm('デフォルトに戻しますか？')){CD=JSON.parse(JSON.stringify(DEFAULTS));await dbP('charData',CD);alert('リセットしました');}};
+
+document.addEventListener('visibilitychange',()=>{if(S.battle.active){if(document.hidden)clearInterval(S.battle.timerInterval);else{S.battle.lastQTime=Date.now();S.battle.timerInterval=setInterval(()=>{S.battle.elapsed++;$('battle-timer').textContent=fmt(S.battle.elapsed);},1000);}}});
+
+const setupPWA=()=>{const m={name:"MathBattle",short_name:"MathBattle",start_url:".",display:"standalone",background_color:"#fff8f0",theme_color:"#e8788a",icons:[{src:"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>",sizes:"192x192",type:"image/svg+xml"}]};$('manifest-link').href='data:application/manifest+json;charset=utf-8,'+encodeURIComponent(JSON.stringify(m));if('serviceWorker' in navigator){navigator.serviceWorker.register(URL.createObjectURL(new Blob([`self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('activate',e=>self.clients.claim());self.addEventListener('fetch',e=>{});`],{type:'application/javascript'}))).catch(()=>{});}};
+
+window.onload=async()=>{setupPWA();await load();nav('home');};
+return{nav,startBattle,inputNum,clearInput,deleteInput,submitAnswer,exportData,importData,saveSettings,importCharacters,resetCharacters};
 })();
-const app = App;
+const app=App;
 </script>
 </body>
 </html>
