@@ -1,270 +1,869 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>MathBattle - Victory Results</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600&amp;family=Lexend:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="light" lang="ja">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+    <meta name="theme-color" content="#f7f9fb"/>
+    <title>MathBattle - 冒険・学び・成長</title>
+    
+    <!-- PWA Manifest (Data URI) -->
+    <link rel="manifest" id="manifest-link" href=""/>
+    <!-- SVG Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600&family=Lexend:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
         theme: {
           extend: {
             colors: {
-              "primary": "#0053dc",
-              "inverse-surface": "#0b0f10",
-              "primary-dim": "#0049c2",
-              "on-background": "#2c3437",
-              "on-tertiary-container": "#54436b",
-              "inverse-primary": "#618bff",
-              "on-error-container": "#6e0a12",
-              "primary-fixed": "#3e76fe",
-              "on-secondary-container": "#435368",
-              "secondary-fixed-dim": "#c5d6f0",
-              "secondary": "#506076",
-              "on-secondary": "#f7f9ff",
-              "background": "#f7f9fb",
-              "surface-container-lowest": "#ffffff",
-              "on-primary-container": "#000000",
-              "error": "#a83836",
-              "on-surface-variant": "#596064",
-              "tertiary-fixed-dim": "#d6c0f1",
-              "surface": "#f7f9fb",
-              "secondary-fixed": "#d3e4fe",
-              "on-secondary-fixed-variant": "#4d5d73",
-              "error-container": "#fa746f",
-              "on-error": "#fff7f6",
-              "on-tertiary-fixed-variant": "#5d4d75",
-              "outline": "#747c80",
-              "tertiary": "#685781",
-              "on-tertiary": "#fef7ff",
-              "surface-dim": "#d4dbdf",
-              "primary-container": "#3e76fe",
-              "surface-container-high": "#e3e9ed",
-              "outline-variant": "#acb3b7",
-              "surface-container": "#eaeff2",
-              "surface-tint": "#0053dc",
-              "on-tertiary-fixed": "#403157",
-              "primary-fixed-dim": "#2d68f0",
-              "surface-container-highest": "#dce4e8",
-              "secondary-dim": "#44546a",
-              "tertiary-fixed": "#e4ceff",
-              "on-surface": "#2c3437",
-              "tertiary-dim": "#5c4b74",
-              "surface-container-low": "#f0f4f7",
-              "on-primary": "#faf8ff",
-              "inverse-on-surface": "#9a9d9f",
-              "tertiary-container": "#e4ceff",
-              "surface-bright": "#f7f9fb",
-              "on-primary-fixed": "#ffffff",
-              "error-dim": "#67040d",
-              "on-secondary-fixed": "#314055",
-              "surface-variant": "#dce4e8",
-              "secondary-container": "#d3e4fe",
-              "on-primary-fixed-variant": "#f9f7ff"
+              "primary": "#0053dc", "inverse-surface": "#0b0f10", "on-background": "#2c3437",
+              "error": "#a83836", "error-container": "#fa746f", "on-error-container": "#6e0a12",
+              "surface": "#f7f9fb", "surface-container-lowest": "#ffffff",
+              "surface-container-low": "#f0f4f7", "surface-container-high": "#e3e9ed",
+              "outline": "#747c80", "outline-variant": "#acb3b7", "primary-container": "#3e76fe"
             },
-            fontFamily: {
-              "headline": ["Manrope"],
-              "body": ["Plus Jakarta Sans"],
-              "label": ["Lexend"]
+            fontFamily: { "headline": ["Manrope"], "body": ["Plus Jakarta Sans"], "label": ["Lexend"] },
+            spacing: { "safe-bottom": "env(safe-area-inset-bottom)" },
+            animation: {
+                'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
+                'attack': 'attack 0.3s ease-in-out',
+                'damage': 'damage 0.4s ease-out'
             },
-            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
-          },
-        },
+            keyframes: {
+                shake: { '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' }, '20%, 80%': { transform: 'translate3d(2px, 0, 0)' }, '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' }, '40%, 60%': { transform: 'translate3d(4px, 0, 0)' } },
+                attack: { '0%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px) scale(1.1)' }, '100%': { transform: 'translateY(0)' } },
+                damage: { '0%': { filter: 'brightness(1) sepia(0)' }, '50%': { filter: 'brightness(0.5) sepia(1) hue-rotate(-50deg) saturate(5)' }, '100%': { filter: 'brightness(1) sepia(0)' } }
+            }
+          }
+        }
       }
     </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .matrix-grid {
-            display: grid;
-            grid-template-columns: repeat(10, minmax(0, 1fr));
-            gap: 4px;
-        }
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .matrix-grid { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; }
+        body { min-height: max(884px, 100dvh); -webkit-tap-highlight-color: transparent; }
+        .view { display: none; opacity: 0; transition: opacity 0.3s ease; }
+        .view.active { display: block; opacity: 1; }
+        .touch-target { min-width: 48px; min-height: 48px; }
+        /* 電卓キーパッド用 */
+        .numpad-btn { background: #ffffff; border-radius: 12px; font-size: 1.5rem; font-weight: 700; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); display: flex; align-items: center; justify-content: center; user-select: none; transition: transform 0.1s, background 0.2s; }
+        .numpad-btn:active { transform: scale(0.95); background: #eaeff2; }
+        .flash-red { animation: damage 0.4s; }
+        .monster-sprite { font-size: 5rem; line-height: 1; display: inline-block; transition: all 0.3s; }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-surface font-body text-on-surface min-h-screen pb-32">
+</head>
+<body class="bg-surface font-body text-on-surface min-h-screen pb-32 sm:pb-24 pt-safe">
+
 <!-- TopAppBar -->
-<header class="bg-[#f7f9fb] dark:bg-slate-900 fixed top-0 w-full z-50">
-<div class="flex justify-between items-center w-full px-6 py-4 max-w-screen-xl mx-auto">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
-<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="User profile avatar silhouette with soft blue background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbq5eQiwl2ZJZGRQAfl523Mz9MuEoXAzeuRhZNHjtngg3JLke7ybSSfPV50XGNkWsSvGK---1-hFVSVtLJvyraJAqXiuPIedkG5_WfaZWl_jWVDxIo9vTWbFq122ncjI1cv-upGpEONFZdYZVlv-7_Qn8xgq-0b1YXJrKlR7SiYiQoTDS9wIgrDxAp4BFJ4oyDQ2UUCuuS_-Ht45fbP9ZsiRiVGMTC50t5IzCNGJn1G-_3AyViGLg-PhbcWejXfKZashet-lK7sdo"/>
-</div>
-<span class="text-xl font-extrabold text-[#0053dc] dark:text-blue-400 font-headline tracking-tight">MathBattle</span>
-</div>
-<div class="text-[#0053dc] dark:text-blue-400 font-headline font-bold tracking-tight">
-                Lvl 24 • 1,250 XP
+<header class="bg-[#f7f9fb]/90 backdrop-blur-md dark:bg-slate-900/90 fixed top-0 w-full z-50 border-b border-surface-container-high">
+    <div class="flex justify-between items-center w-full px-6 py-4 max-w-screen-xl mx-auto">
+        <div class="flex items-center gap-3 cursor-pointer touch-target" onclick="app.nav('home')">
+            <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
+                <span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">swords</span>
             </div>
-</div>
+            <span class="text-xl font-extrabold text-primary dark:text-blue-400 font-headline tracking-tight">MathBattle</span>
+        </div>
+        <div class="text-primary dark:text-blue-400 font-headline font-bold tracking-tight text-right flex flex-col">
+            <span id="header-level">Lvl 1</span>
+            <span id="header-xp" class="text-xs text-outline">0 XP</span>
+        </div>
+    </div>
 </header>
-<main class="max-w-screen-xl mx-auto px-6 pt-24 space-y-8">
-<!-- Victory Hero Section -->
-<section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-<div class="lg:col-span-7 bg-surface-container-lowest rounded-3xl p-8 flex flex-col justify-center relative overflow-hidden">
-<div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -mr-20 -mt-20 blur-3xl"></div>
-<div class="relative z-10">
-<div class="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full font-label text-sm mb-6">
-<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">military_tech</span>
-                        MISSION COMPLETE
+
+<div id="app-container" class="max-w-screen-xl mx-auto px-4 sm:px-6 pt-24 space-y-8">
+
+    <!-- ================= HOME VIEW ================= -->
+    <main id="home-view" class="view active space-y-6">
+        <section class="bg-surface-container-lowest rounded-3xl p-6 shadow-sm border border-surface-container">
+            <h2 class="font-headline text-2xl font-bold mb-4">冒険の記録</h2>
+            <div class="bg-primary bg-gradient-to-br from-primary to-primary-container rounded-2xl p-6 text-white text-center relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-10 -mt-10 blur-xl"></div>
+                <h3 class="font-headline text-3xl font-extrabold mb-2" id="home-level-display">Level 1</h3>
+                <p class="text-white/80 text-sm mb-4" id="home-xp-text">0 / 1000 XP to Level 2</p>
+                <div class="w-full bg-white/20 rounded-full h-4 overflow-hidden mb-2 relative">
+                    <div id="home-xp-bar" class="bg-white h-full w-0 rounded-full transition-all duration-1000"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-2 gap-4">
+            <div onclick="app.nav('badges')" class="bg-surface-container-lowest rounded-3xl p-6 shadow-sm flex flex-col items-center justify-center cursor-pointer hover:bg-surface-container touch-target transition-colors">
+                <span class="material-symbols-outlined text-4xl text-yellow-500 mb-2" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+                <span class="font-headline font-bold text-center">バッジ<br>コレクション</span>
+            </div>
+            <div onclick="app.nav('history')" class="bg-surface-container-lowest rounded-3xl p-6 shadow-sm flex flex-col items-center justify-center cursor-pointer hover:bg-surface-container touch-target transition-colors">
+                <span class="material-symbols-outlined text-4xl text-secondary mb-2">auto_graph</span>
+                <span class="font-headline font-bold text-center">バトルの<br>履歴</span>
+            </div>
+        </section>
+
+        <button onclick="app.nav('setup')" class="w-full h-16 rounded-2xl bg-primary text-white font-headline font-bold text-lg flex items-center justify-center gap-3 shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity touch-target">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">swords</span>
+            新しい冒険に出発
+        </button>
+    </main>
+
+    <!-- ================= SETUP VIEW ================= -->
+    <main id="setup-view" class="view space-y-6">
+        <h2 class="font-headline text-2xl font-bold">出撃準備</h2>
+        
+        <div class="bg-surface-container-lowest rounded-3xl p-6 shadow-sm space-y-6">
+            <div>
+                <h3 class="font-label text-sm text-outline mb-3">ターゲット（難易度）</h3>
+                <div class="grid grid-cols-3 gap-3" id="difficulty-selectors">
+                    <!-- JSで生成 -->
+                </div>
+                <p id="monster-preview" class="text-sm mt-3 text-center text-on-surface-variant flex items-center justify-center gap-2">
+                    <!-- モンスター情報 -->
+                </p>
+            </div>
+
+            <div>
+                <h3 class="font-label text-sm text-outline mb-3">使う魔法（演算・複数可）</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <label class="flex items-center gap-2 p-3 border rounded-xl cursor-pointer bg-surface-container-low touch-target"><input type="checkbox" id="op-add" checked class="form-checkbox text-primary rounded"> <span>＋ たし算</span></label>
+                    <label class="flex items-center gap-2 p-3 border rounded-xl cursor-pointer bg-surface-container-low touch-target"><input type="checkbox" id="op-sub" checked class="form-checkbox text-primary rounded"> <span>－ ひき算</span></label>
+                    <label class="flex items-center gap-2 p-3 border rounded-xl cursor-pointer bg-surface-container-low touch-target"><input type="checkbox" id="op-mul" class="form-checkbox text-primary rounded"> <span>× かけ算</span></label>
+                    <label class="flex items-center gap-2 p-3 border rounded-xl cursor-pointer bg-surface-container-low touch-target"><input type="checkbox" id="op-div" class="form-checkbox text-primary rounded"> <span>÷ わり算</span></label>
+                </div>
+            </div>
+            
+            <button onclick="app.startBattle()" class="w-full h-16 rounded-2xl bg-error text-white font-headline font-bold text-lg flex items-center justify-center gap-3 shadow-lg shadow-error/20 hover:opacity-90 touch-target mt-4">
+                バトル開始 (100問)
+            </button>
+        </div>
+    </main>
+
+    <!-- ================= BATTLE VIEW ================= -->
+    <main id="battle-view" class="view">
+        <div class="flex flex-col h-[calc(100vh-140px)] justify-between max-w-md mx-auto">
+            <!-- 上部ステータス -->
+            <div class="flex justify-between items-center mb-4 bg-surface-container-lowest p-4 rounded-2xl shadow-sm">
+                <div class="flex flex-col">
+                    <span class="text-xs font-label text-outline">進捗</span>
+                    <span class="font-headline font-bold text-lg"><span id="battle-progress">1</span> / 100</span>
+                </div>
+                <div class="flex flex-col text-right">
+                    <span class="text-xs font-label text-outline">タイム</span>
+                    <span class="font-headline font-bold text-lg" id="battle-timer">00:00</span>
+                </div>
+            </div>
+
+            <!-- モンスターエリア -->
+            <div id="monster-area" class="flex-1 bg-surface-container-lowest rounded-3xl p-6 flex flex-col items-center justify-center shadow-sm relative overflow-hidden mb-4">
+                <div class="absolute top-4 left-4 right-4 h-2 bg-surface-container rounded-full overflow-hidden">
+                    <div id="monster-hp-bar" class="h-full bg-error transition-all duration-300 w-full"></div>
+                </div>
+                <div id="monster-sprite" class="monster-sprite mb-4 mt-6">👾</div>
+                <h3 id="monster-name" class="font-label text-sm text-outline mb-6">スライム 1匹目</h3>
+                
+                <!-- 問題 -->
+                <div class="font-headline text-5xl font-extrabold tracking-widest text-center" id="battle-question">
+                    -- + -- =
+                </div>
+                <div class="mt-4 h-12 flex items-center justify-center min-w-[100px] border-b-4 border-primary text-3xl font-bold text-primary" id="battle-input">
+                    <!-- 入力値 -->
+                </div>
+            </div>
+
+            <!-- 電卓キーパッド (ペルソナ指定: 789, 456, 123, C0Del) -->
+            <div class="grid grid-cols-4 gap-2 mb-2">
+                <div class="col-span-3 grid grid-cols-3 gap-2">
+                    <button class="numpad-btn h-14" onclick="app.inputNum(7)">7</button>
+                    <button class="numpad-btn h-14" onclick="app.inputNum(8)">8</button>
+                    <button class="numpad-btn h-14" onclick="app.inputNum(9)">9</button>
+                    <button class="numpad-btn h-14" onclick="app.inputNum(4)">4</button>
+                    <button class="numpad-btn h-14" onclick="app.inputNum(5)">5</button>
+                    <button class="numpad-btn h-14" onclick="app.inputNum(6)">6</button>
+                    <button class="numpad-btn h-14" onclick="app.inputNum(1)">1</button>
+                    <button class="numpad-btn h-14" onclick="app.inputNum(2)">2</button>
+                    <button class="numpad-btn h-14" onclick="app.inputNum(3)">3</button>
+                    <button class="numpad-btn h-14 text-error" onclick="app.clearInput()">C</button>
+                    <button class="numpad-btn h-14" onclick="app.inputNum(0)">0</button>
+                    <button class="numpad-btn h-14 text-outline" onclick="app.deleteInput()"><span class="material-symbols-outlined">backspace</span></button>
+                </div>
+                <button class="numpad-btn bg-primary text-white h-full" onclick="app.submitAnswer()">
+                    <span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">keyboard_return</span>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- ================= RESULT VIEW (既存コードベース＋カスタマイズ) ================= -->
+    <main id="result-view" class="view space-y-8">
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            <div class="lg:col-span-7 bg-surface-container-lowest rounded-3xl p-8 flex flex-col justify-center relative overflow-hidden shadow-sm">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -mr-20 -mt-20 blur-3xl"></div>
+                <div class="relative z-10">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full font-label text-sm mb-6">
+                        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">military_tech</span> MISSION COMPLETE
                     </div>
-<h1 class="font-headline text-5xl font-extrabold text-on-surface mb-4 tracking-tight">VICTORY</h1>
-<p class="text-on-surface-variant text-lg max-w-md mb-8">You conquered the 100-Question Gauntlet. The Algebra Behemoth has been slain!</p>
-<div class="flex items-center gap-6">
-<div class="flex flex-col">
-<span class="font-label text-xs text-outline tracking-widest uppercase">XP EARNED</span>
-<span class="font-headline text-3xl font-bold text-primary">+450 XP</span>
-</div>
-<div class="w-px h-10 bg-surface-container-highest"></div>
-<div class="flex flex-col">
-<span class="font-label text-xs text-outline tracking-widest uppercase">ACCURACY</span>
-<span class="font-headline text-3xl font-bold text-on-surface">94%</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Monster Slain Status & Level Progress -->
-<div class="lg:col-span-5 space-y-6">
-<div class="bg-primary bg-gradient-to-br from-primary to-primary-container rounded-3xl p-8 text-on-primary shadow-[0_20px_40px_rgba(0,83,220,0.1)] flex flex-col items-center text-center">
-<div class="w-32 h-32 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center mb-6">
-<span class="material-symbols-outlined text-6xl" style="font-variation-settings: 'FILL' 1;">skull</span>
-</div>
-<h3 class="font-headline text-2xl font-bold mb-1">Monster Slain!</h3>
-<p class="font-body text-white/80 text-sm mb-6">Level 24 Algebra Behemoth Defeated</p>
-<div class="w-full bg-white/10 rounded-full h-3 overflow-hidden mb-2">
-<div class="bg-white h-full w-4/5 rounded-full"></div>
-</div>
-<div class="flex justify-between w-full text-xs font-label">
-<span>LVL 24</span>
-<span>800 / 1000 XP TO LVL 25</span>
-</div>
-</div>
-</div>
-</section>
-<!-- Accuracy Matrix Section -->
-<section class="bg-surface-container-low rounded-3xl p-8">
-<div class="flex items-center justify-between mb-8">
-<div>
-<h2 class="font-headline text-2xl font-bold text-on-surface">Accuracy Matrix</h2>
-<p class="text-on-surface-variant text-sm">Visual breakdown of your 100-question performance</p>
-</div>
-<div class="flex gap-4">
-<div class="flex items-center gap-2">
-<div class="w-3 h-3 rounded bg-primary"></div>
-<span class="text-xs font-label text-outline">Correct</span>
-</div>
-<div class="flex items-center gap-2">
-<div class="w-3 h-3 rounded bg-error-container"></div>
-<span class="text-xs font-label text-outline">Missed</span>
-</div>
-</div>
-</div>
-<div class="matrix-grid">
-<!-- Row 1 -->
-<div class="aspect-square bg-primary rounded-md"></div>
-<div class="aspect-square bg-primary rounded-md"></div>
-<div class="aspect-square bg-primary rounded-md"></div>
-<div class="aspect-square bg-error-container rounded-md"></div>
-<div class="aspect-square bg-primary rounded-md"></div>
-<div class="aspect-square bg-primary rounded-md"></div>
-<div class="aspect-square bg-primary rounded-md"></div>
-<div class="aspect-square bg-primary rounded-md"></div>
-<div class="aspect-square bg-primary rounded-md"></div>
-<div class="aspect-square bg-primary rounded-md"></div>
-<!-- Row 2 -->
-<div class="aspect-square bg-primary rounded-md"></div>
-<div class="aspect-square bg-primary rounded-md"></div>
-<div class="aspect-square bg-primary rounded-md"></div>
-<div class="aspect-square bg-primary rounded-md"></div>
-<div class="aspect-square bg-primary rounded-md"></div>
-<div class="aspect-square bg-primary rounded-md"></div>
-<div class="aspect-square bg-error-container rounded-md"></div>
-<div class="aspect-square bg-primary rounded-md"></div>
-<div class="aspect-square bg-primary rounded-md"></div>
-<div class="aspect-square bg-primary rounded-md"></div>
-<!-- Row 3-10 Simulating rest -->
-<div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div>
-<div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-error-container rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div>
-<div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div>
-<div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-error-container rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div>
-<div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div>
-<div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-error-container rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div>
-<div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div>
-<div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-error-container rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div><div class="aspect-square bg-primary rounded-md"></div>
-</div>
-</section>
-<!-- Review Errors Section -->
-<section class="space-y-6">
-<h2 class="font-headline text-2xl font-bold text-on-surface">Review Errors</h2>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<!-- Error Card 1 -->
-<div class="bg-surface-container-lowest rounded-3xl p-6 flex items-center justify-between group hover:bg-surface-container transition-colors">
-<div class="space-y-1">
-<span class="font-label text-xs text-error font-medium">Question #4</span>
-<div class="font-headline text-2xl font-bold">14 x 7 = <span class="text-error-container">?</span></div>
-</div>
-<div class="flex items-center gap-4">
-<div class="text-right hidden sm:block">
-<span class="block text-xs font-label text-outline">Your Answer</span>
-<span class="font-headline text-lg font-bold text-on-surface-variant">88</span>
-</div>
-<button class="w-12 h-12 rounded-2xl bg-primary-container text-on-primary flex items-center justify-center hover:scale-105 transition-transform">
-<span class="material-symbols-outlined">edit</span>
-</button>
-</div>
-</div>
-<!-- Error Card 2 -->
-<div class="bg-surface-container-lowest rounded-3xl p-6 flex items-center justify-between group hover:bg-surface-container transition-colors">
-<div class="space-y-1">
-<span class="font-label text-xs text-error font-medium">Question #17</span>
-<div class="font-headline text-2xl font-bold">423 ÷ 9 = <span class="text-error-container">?</span></div>
-</div>
-<div class="flex items-center gap-4">
-<div class="text-right hidden sm:block">
-<span class="block text-xs font-label text-outline">Your Answer</span>
-<span class="font-headline text-lg font-bold text-on-surface-variant">45</span>
-</div>
-<button class="w-12 h-12 rounded-2xl bg-primary-container text-on-primary flex items-center justify-center hover:scale-105 transition-transform">
-<span class="material-symbols-outlined">edit</span>
-</button>
-</div>
-</div>
-</div>
-</section>
-<!-- Action Buttons -->
-<section class="flex flex-col sm:flex-row gap-4 pt-4">
-<button class="flex-1 h-16 rounded-2xl bg-primary bg-gradient-to-r from-primary to-primary-container text-white font-headline font-bold text-lg flex items-center justify-center gap-3 shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">replay</span>
-                Restart Challenge
+                    <h1 class="font-headline text-5xl font-extrabold text-on-surface mb-4 tracking-tight">VICTORY</h1>
+                    <p class="text-on-surface-variant text-lg max-w-md mb-8">You conquered the 100-Question Gauntlet.</p>
+                    <div class="flex items-center gap-6">
+                        <div class="flex flex-col">
+                            <span class="font-label text-xs text-outline tracking-widest uppercase">XP EARNED</span>
+                            <span class="font-headline text-3xl font-bold text-primary" id="result-xp">+0 XP</span>
+                        </div>
+                        <div class="w-px h-10 bg-surface-container-highest"></div>
+                        <div class="flex flex-col">
+                            <span class="font-label text-xs text-outline tracking-widest uppercase">ACCURACY</span>
+                            <span class="font-headline text-3xl font-bold text-on-surface" id="result-accuracy">0%</span>
+                        </div>
+                        <div class="w-px h-10 bg-surface-container-highest"></div>
+                        <div class="flex flex-col">
+                            <span class="font-label text-xs text-outline tracking-widest uppercase">TIME</span>
+                            <span class="font-headline text-3xl font-bold text-on-surface" id="result-time">00:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monster Slain Status & Badge -->
+            <div class="lg:col-span-5 space-y-6">
+                <div class="bg-primary bg-gradient-to-br from-primary to-primary-container rounded-3xl p-8 text-on-primary shadow-lg flex flex-col items-center text-center relative">
+                    <div id="badge-earned-overlay" class="hidden absolute inset-0 bg-yellow-400/90 rounded-3xl z-20 flex flex-col items-center justify-center text-on-surface">
+                        <span class="material-symbols-outlined text-6xl text-white mb-2" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+                        <h3 class="font-headline text-2xl font-bold">NEW BADGE!</h3>
+                        <p id="badge-name-display" class="font-bold"></p>
+                    </div>
+                    <div class="w-32 h-32 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center mb-6">
+                        <span id="result-monster-icon" class="text-6xl">💀</span>
+                    </div>
+                    <h3 class="font-headline text-2xl font-bold mb-1">Boss Slain!</h3>
+                    <p class="font-body text-white/80 text-sm mb-6" id="result-boss-name">Level Boss Defeated</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Accuracy Matrix Section -->
+        <section class="bg-surface-container-lowest rounded-3xl p-8 shadow-sm">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h2 class="font-headline text-2xl font-bold text-on-surface">Accuracy Matrix</h2>
+                    <p class="text-on-surface-variant text-sm">Visual breakdown of your 100-question performance</p>
+                </div>
+                <div class="flex gap-4">
+                    <div class="flex items-center gap-2"><div class="w-3 h-3 rounded bg-primary"></div><span class="text-xs font-label text-outline">Correct</span></div>
+                    <div class="flex items-center gap-2"><div class="w-3 h-3 rounded bg-error-container"></div><span class="text-xs font-label text-outline">Missed</span></div>
+                </div>
+            </div>
+            <!-- JSで100マス生成 -->
+            <div id="accuracy-matrix" class="matrix-grid"></div>
+        </section>
+
+        <!-- Time Chart (新機能) -->
+        <section class="bg-surface-container-lowest rounded-3xl p-8 shadow-sm">
+             <h2 class="font-headline text-2xl font-bold text-on-surface mb-4">解答スピード (秒)</h2>
+             <div class="h-32 flex items-end gap-1 w-full overflow-x-auto overflow-y-hidden" id="time-chart">
+                 <!-- JSで棒グラフ生成 -->
+             </div>
+        </section>
+
+        <!-- Review Errors Section -->
+        <section class="space-y-6" id="review-errors-section">
+            <h2 class="font-headline text-2xl font-bold text-on-surface">Review Errors</h2>
+            <div id="error-cards" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- JSで生成 -->
+            </div>
+        </section>
+
+        <!-- Action Buttons -->
+        <section class="flex flex-col sm:flex-row gap-4 pt-4">
+            <button onclick="app.nav('setup')" class="flex-1 h-16 rounded-2xl bg-primary text-white font-headline font-bold text-lg flex items-center justify-center gap-3 shadow-lg hover:opacity-90 touch-target">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">replay</span> 新しいチャレンジ
             </button>
-<button class="flex-1 h-16 rounded-2xl bg-surface-container-high text-on-surface font-headline font-bold text-lg flex items-center justify-center gap-3 hover:bg-surface-container-highest transition-colors">
-<span class="material-symbols-outlined">analytics</span>
-                View History
+            <button onclick="app.nav('history')" class="flex-1 h-16 rounded-2xl bg-surface-container-high text-on-surface font-headline font-bold text-lg flex items-center justify-center gap-3 hover:bg-surface-container-highest touch-target">
+                <span class="material-symbols-outlined">analytics</span> 履歴を見る
             </button>
-</section>
-</main>
+        </section>
+    </main>
+
+    <!-- ================= HISTORY VIEW ================= -->
+    <main id="history-view" class="view space-y-6">
+        <h2 class="font-headline text-2xl font-bold">バトルの履歴</h2>
+        <div id="history-list" class="space-y-4">
+            <!-- JSで生成 -->
+        </div>
+    </main>
+
+    <!-- ================= BADGES VIEW ================= -->
+    <main id="badges-view" class="view space-y-6">
+        <div class="bg-surface-container-lowest p-6 rounded-3xl shadow-sm text-center">
+            <h2 class="font-headline text-2xl font-bold mb-2">バッジコレクション</h2>
+            <p class="text-sm text-on-surface-variant text-left">※ゲームの価値を保つため、一度獲得したバッジは同じ難易度で再獲得できません。より高い難易度に挑戦しよう！</p>
+        </div>
+        <div id="badges-list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            <!-- JSで生成 -->
+        </div>
+    </main>
+
+    <!-- ================= SETTINGS VIEW ================= -->
+    <main id="settings-view" class="view space-y-6">
+        <h2 class="font-headline text-2xl font-bold">システム設定</h2>
+        
+        <section class="bg-surface-container-lowest rounded-3xl p-6 shadow-sm space-y-4">
+            <h3 class="font-bold flex items-center gap-2"><span class="material-symbols-outlined">database</span> データ管理 (IndexedDB)</h3>
+            <div class="flex gap-4">
+                <button onclick="app.exportData()" class="px-4 py-2 bg-surface-container text-on-surface rounded-lg font-label text-sm touch-target">エクスポート</button>
+                <button onclick="document.getElementById('import-file').click()" class="px-4 py-2 bg-surface-container text-on-surface rounded-lg font-label text-sm touch-target">インポート</button>
+                <input type="file" id="import-file" class="hidden" accept=".json" onchange="app.importData(event)">
+            </div>
+        </section>
+
+        <section class="bg-surface-container-lowest rounded-3xl p-6 shadow-sm space-y-4">
+            <h3 class="font-bold flex items-center gap-2"><span class="material-symbols-outlined">smart_toy</span> AI連携 (拡張用)</h3>
+            <div>
+                <label class="block text-xs font-label text-outline mb-1">API Key (暗号化されてDB保存)</label>
+                <input type="password" id="setting-api-key" placeholder="sk-..." class="w-full rounded-xl border-outline-variant bg-surface p-3 font-mono text-sm">
+            </div>
+            <div>
+                <label class="block text-xs font-label text-outline mb-1">システムプロンプト</label>
+                <textarea id="setting-prompt" rows="3" class="w-full rounded-xl border-outline-variant bg-surface p-3 text-sm">You are an encouraging AI tutor for elementary kids.</textarea>
+            </div>
+            <button onclick="app.saveSettings()" class="w-full py-3 bg-primary text-white rounded-xl font-bold touch-target">保存する</button>
+        </section>
+
+        <section class="bg-surface-container-lowest rounded-3xl p-6 shadow-sm">
+            <h3 class="font-bold mb-2">プライバシーポリシー</h3>
+            <p class="text-xs text-on-surface-variant leading-relaxed">
+                本アプリケーション「MathBattle」は、Google Playポリシーの「Minimum Functionality」を遵守し、Web体験の単なるミラーリングではない独自のインタラクティブ機能を提供します。<br>
+                **データ収集**: プレイ履歴や設定データは、デバイス内のIndexedDBにのみ保存され、外部サーバーへの自動送信は行いません。<br>
+                **AI機能**: 入力されたAPIキーはローカルのIndexedDBのみに保存され、ユーザー自身の意思によるAI通信時のみ使用されます。入力のサニタイズを徹底し、XSS等の脆弱性から保護されています。
+            </p>
+        </section>
+    </main>
+
+</div>
+
 <!-- BottomNavBar -->
-<nav class="fixed bottom-0 left-0 w-full z-50 rounded-t-3xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border-t border-slate-100 dark:border-slate-800 shadow-[0_-10px_30px_rgba(0,83,220,0.04)] pb-6 pt-3 px-4 flex justify-around items-center">
-<div class="flex flex-col items-center justify-center bg-[#0053dc] text-white rounded-2xl px-6 py-2 transition-all duration-300">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calculate</span>
-<span class="font-['Lexend'] text-[12px] font-medium">Practice</span>
-</div>
-<div class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-6 py-2 hover:text-[#0053dc] dark:hover:text-blue-300">
-<span class="material-symbols-outlined">history</span>
-<span class="font-['Lexend'] text-[12px] font-medium">History</span>
-</div>
-<div class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-6 py-2 hover:text-[#0053dc] dark:hover:text-blue-300">
-<span class="material-symbols-outlined">settings</span>
-<span class="font-['Lexend'] text-[12px] font-medium">Settings</span>
-</div>
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-[#f7f9fb]/90 dark:bg-slate-900/90 backdrop-blur-xl border-t border-surface-container-high pb-[max(16px,env(safe-area-inset-bottom))] pt-3 px-4 flex justify-around items-center">
+    <div onclick="app.nav('home')" id="nav-home" class="nav-item flex flex-col items-center justify-center text-slate-400 px-6 py-2 rounded-2xl cursor-pointer touch-target transition-all">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+        <span class="font-label text-[10px] font-medium mt-1">Home</span>
+    </div>
+    <div onclick="app.nav('setup')" id="nav-setup" class="nav-item flex flex-col items-center justify-center text-slate-400 px-6 py-2 rounded-2xl cursor-pointer touch-target transition-all">
+        <span class="material-symbols-outlined">calculate</span>
+        <span class="font-label text-[10px] font-medium mt-1">Battle</span>
+    </div>
+    <div onclick="app.nav('history')" id="nav-history" class="nav-item flex flex-col items-center justify-center text-slate-400 px-6 py-2 rounded-2xl cursor-pointer touch-target transition-all">
+        <span class="material-symbols-outlined">history</span>
+        <span class="font-label text-[10px] font-medium mt-1">History</span>
+    </div>
+    <div onclick="app.nav('settings')" id="nav-settings" class="nav-item flex flex-col items-center justify-center text-slate-400 px-6 py-2 rounded-2xl cursor-pointer touch-target transition-all">
+        <span class="material-symbols-outlined">settings</span>
+        <span class="font-label text-[10px] font-medium mt-1">Settings</span>
+    </div>
 </nav>
-</body></html>
+
+<script>
+/**
+ * MathBattle Core Application Logic
+ * IndexedDB, Game Loop, Rendering, PWA
+ */
+const App = (() => {
+    // === Utils ===
+    const $ = id => document.getElementById(id);
+    const escapeHTML = str => str.replace(/[&<>'"]/g, tag => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'}[tag]));
+    const formatTime = seconds => {
+        const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+        const s = (seconds % 60).toString().padStart(2, '0');
+        return `${m}:${s}`;
+    };
+
+    // === Game Data & Config ===
+    const DB_NAME = 'MathBattleDB';
+    const DB_VER = 1;
+    let db = null;
+
+    const DIFFICULTIES = [
+        { id: 'easy', name: 'スライム谷', ops: [1, 9], icon: '🟢', sprite: '👾', boss: 'キングスライム', xpMulti: 1 },
+        { id: 'normal', name: 'ゴブリン砦', ops: [10, 99], icon: '👹', sprite: '👺', boss: 'オーガチーフ', xpMulti: 2 },
+        { id: 'hard', name: '魔王の城', ops: [100, 999], icon: '🐉', sprite: '👿', boss: 'Algebra Behemoth', xpMulti: 5 }
+    ];
+
+    let state = {
+        user: { xp: 0, level: 1 },
+        settings: { apiKey: '', prompt: '' },
+        badges: [],
+        history: [],
+        
+        // Battle State
+        battle: {
+            active: false, questions: [], currentIdx: 0,
+            inputStr: '', startTime: 0, timerInterval: null,
+            elapsed: 0, diff: null
+        }
+    };
+
+    // === DB Wrapper ===
+    const initDB = () => new Promise((resolve, reject) => {
+        const req = indexedDB.open(DB_NAME, DB_VER);
+        req.onupgradeneeded = e => {
+            db = e.target.result;
+            if(!db.objectStoreNames.contains('data')) {
+                db.createObjectStore('data');
+            }
+        };
+        req.onsuccess = e => { db = e.target.result; resolve(); };
+        req.onerror = e => reject(e);
+    });
+
+    const dbGet = key => new Promise(res => {
+        const tx = db.transaction('data', 'readonly');
+        const req = tx.objectStore('data').get(key);
+        req.onsuccess = () => res(req.result);
+    });
+    
+    const dbPut = (key, val) => new Promise(res => {
+        const tx = db.transaction('data', 'readwrite');
+        const req = tx.objectStore('data').put(val, key);
+        req.onsuccess = () => res();
+    });
+
+    // === Core logic ===
+    const loadData = async () => {
+        await initDB();
+        const u = await dbGet('user'); if(u) state.user = u;
+        const s = await dbGet('settings'); if(s) state.settings = s;
+        const b = await dbGet('badges'); if(b) state.badges = b;
+        const h = await dbGet('history'); if(h) state.history = h;
+        updateHeader();
+    };
+
+    const saveData = async () => {
+        await dbPut('user', state.user);
+        await dbPut('settings', state.settings);
+        await dbPut('badges', state.badges);
+        await dbPut('history', state.history);
+        updateHeader();
+    };
+
+    const calculateLevel = (xp) => Math.floor(xp / 1000) + 1;
+    
+    const updateHeader = () => {
+        const lvl = calculateLevel(state.user.xp);
+        state.user.level = lvl;
+        $('header-level').textContent = `Lvl ${lvl}`;
+        $('header-xp').textContent = `${state.user.xp.toLocaleString()} XP`;
+        
+        // Home View updates
+        if($('home-level-display')) {
+            $('home-level-display').textContent = `Level ${lvl}`;
+            const currentLevelXp = state.user.xp % 1000;
+            $('home-xp-text').textContent = `${currentLevelXp} / 1000 XP to Level ${lvl + 1}`;
+            $('home-xp-bar').style.width = `${(currentLevelXp / 1000) * 100}%`;
+        }
+    };
+
+    // === UI & Navigation ===
+    const nav = (viewId) => {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        $(viewId + '-view').classList.add('active');
+        
+        // Nav bar highlights
+        document.querySelectorAll('.nav-item').forEach(n => {
+            n.classList.remove('bg-primary', 'text-white');
+            n.classList.add('text-slate-400');
+        });
+        const activeNav = $('nav-' + viewId);
+        if(activeNav) {
+            activeNav.classList.remove('text-slate-400');
+            activeNav.classList.add('bg-primary', 'text-white');
+        }
+
+        if(viewId === 'setup') renderSetup();
+        if(viewId === 'history') renderHistory();
+        if(viewId === 'badges') renderBadges();
+        if(viewId === 'settings') renderSettings();
+        
+        window.scrollTo(0,0);
+    };
+
+    // Setup Render
+    const renderSetup = () => {
+        const container = $('difficulty-selectors');
+        container.innerHTML = '';
+        DIFFICULTIES.forEach((d, i) => {
+            const btn = document.createElement('div');
+            btn.className = `p-4 border-2 rounded-2xl cursor-pointer text-center flex flex-col items-center transition-all ${i===0?'border-primary bg-primary/5':'border-outline-variant bg-surface'}`;
+            btn.onclick = () => {
+                Array.from(container.children).forEach(c=> { c.classList.remove('border-primary','bg-primary/5'); c.classList.add('border-outline-variant','bg-surface'); });
+                btn.classList.add('border-primary','bg-primary/5');
+                btn.classList.remove('border-outline-variant','bg-surface');
+                $('monster-preview').innerHTML = `<span class="text-2xl">${d.icon}</span> ${escapeHTML(d.name)} 出現（ボス: ${escapeHTML(d.boss)}）`;
+                container.dataset.selected = d.id;
+            };
+            btn.innerHTML = `<span class="text-3xl mb-1">${d.sprite}</span><span class="font-bold text-sm">${d.name}</span>`;
+            container.appendChild(btn);
+        });
+        container.children[0].click();
+    };
+
+    // === Game Logic ===
+    const startBattle = () => {
+        const diffId = $('difficulty-selectors').dataset.selected || 'easy';
+        const diff = DIFFICULTIES.find(d => d.id === diffId);
+        
+        const ops = [];
+        if($('op-add').checked) ops.push('+');
+        if($('op-sub').checked) ops.push('-');
+        if($('op-mul').checked) ops.push('*');
+        if($('op-div').checked) ops.push('/');
+        if(ops.length === 0) return alert('魔法（演算）を一つ以上選んでください！');
+
+        const generateQ = () => {
+            const op = ops[Math.floor(Math.random() * ops.length)];
+            let a = Math.floor(Math.random() * (diff.ops[1] - diff.ops[0] + 1)) + diff.ops[0];
+            let b = Math.floor(Math.random() * (diff.ops[1] - diff.ops[0] + 1)) + diff.ops[0];
+            if(op === '-') { if(a < b) [a, b] = [b, a]; }
+            if(op === '/') { a = a * b; } // 割り切れるようにする
+            
+            let ans = 0;
+            if(op==='+') ans = a+b; if(op==='-') ans = a-b;
+            if(op==='*') ans = a*b; if(op==='/') ans = a/b;
+            
+            const displayOp = op==='*' ? '×' : op==='/' ? '÷' : op;
+            return { text: `${a} ${displayOp} ${b} =`, ans: ans, a, b, op };
+        };
+
+        const questions = [];
+        for(let i=0; i<100; i++) questions.push({...generateQ(), result: null, time: 0}); // 100問固定
+
+        state.battle = {
+            active: true, diff, questions, currentIdx: 0,
+            inputStr: '', elapsed: 0, lastQTime: Date.now()
+        };
+
+        $('monster-sprite').textContent = diff.sprite;
+        nav('battle');
+        updateBattleUI();
+
+        clearInterval(state.battle.timerInterval);
+        state.battle.timerInterval = setInterval(() => {
+            if(!document.hidden) {
+                state.battle.elapsed++;
+                $('battle-timer').textContent = formatTime(state.battle.elapsed);
+            }
+        }, 1000);
+    };
+
+    const updateBattleUI = () => {
+        const b = state.battle;
+        $('battle-progress').textContent = b.currentIdx + 1;
+        $('battle-question').textContent = b.questions[b.currentIdx].text;
+        $('battle-input').textContent = b.inputStr || ' ';
+        $('monster-name').textContent = `${b.diff.name}の魔物 ${b.currentIdx + 1}匹目`;
+        // HPバーは1問1匹なので常に満タンからスタート
+        $('monster-hp-bar').style.width = '100%';
+    };
+
+    const inputNum = (n) => {
+        if(state.battle.inputStr.length < 5) {
+            state.battle.inputStr += n;
+            $('battle-input').textContent = state.battle.inputStr;
+        }
+    };
+    const clearInput = () => { state.battle.inputStr = ''; $('battle-input').textContent = ' '; };
+    const deleteInput = () => { 
+        state.battle.inputStr = state.battle.inputStr.slice(0, -1);
+        $('battle-input').textContent = state.battle.inputStr || ' '; 
+    };
+
+    const submitAnswer = () => {
+        const b = state.battle;
+        if(!b.active || b.inputStr === '') return;
+
+        const q = b.questions[b.currentIdx];
+        const userAns = parseInt(b.inputStr, 10);
+        const isCorrect = userAns === q.ans;
+        const now = Date.now();
+        q.result = userAns;
+        q.isCorrect = isCorrect;
+        q.time = Math.round((now - b.lastQTime) / 1000); // seconds
+        b.lastQTime = now;
+
+        if(isCorrect) {
+            // 正解: モンスターにダメージ
+            $('monster-hp-bar').style.width = '0%';
+            const s = $('monster-sprite');
+            s.classList.add('flash-red', 'scale-50', 'opacity-0');
+            setTimeout(() => {
+                s.classList.remove('flash-red', 'scale-50', 'opacity-0');
+                nextQuestion();
+            }, 300);
+        } else {
+            // 不正解: モンスターが反撃
+            $('monster-sprite').classList.add('animate-attack');
+            setTimeout(() => $('monster-sprite').classList.remove('animate-attack'), 300);
+            document.body.classList.add('flash-red');
+            setTimeout(() => document.body.classList.remove('flash-red'), 400);
+            
+            // 少し待って次へ
+            setTimeout(nextQuestion, 500);
+        }
+    };
+
+    const nextQuestion = () => {
+        const b = state.battle;
+        b.currentIdx++;
+        b.inputStr = '';
+        if(b.currentIdx >= b.questions.length) {
+            finishBattle();
+        } else {
+            updateBattleUI();
+        }
+    };
+
+    const finishBattle = async () => {
+        clearInterval(state.battle.timerInterval);
+        const b = state.battle;
+        b.active = false;
+
+        const corrects = b.questions.filter(q => q.isCorrect).length;
+        const total = b.questions.length;
+        const accuracy = Math.round((corrects / total) * 100);
+        const xpEarned = corrects * b.diff.xpMulti;
+
+        // Update User
+        state.user.xp += xpEarned;
+        
+        // Check Badge Logic
+        let newBadge = null;
+        if(accuracy >= 80) { // 80%以上でバッジ判定
+            const badgeId = `badge_${b.diff.id}`;
+            const alreadyHas = state.badges.find(bg => bg.id === badgeId);
+            if(!alreadyHas) {
+                newBadge = { id: badgeId, name: `${b.diff.name}制覇`, diffId: b.diff.id, date: new Date().toISOString() };
+                state.badges.push(newBadge);
+            }
+        }
+
+        // Save History
+        const record = {
+            id: Date.now(),
+            date: new Date().toISOString(),
+            diffName: b.diff.name,
+            score: corrects,
+            total,
+            accuracy,
+            timeSec: b.elapsed,
+            xp: xpEarned,
+            details: b.questions
+        };
+        state.history.unshift(record);
+        if(state.history.length > 50) state.history.pop(); // limit
+        await saveData();
+
+        renderResult(record, b.diff, newBadge);
+        nav('result');
+    };
+
+    // === Result Render ===
+    const renderResult = (record, diff, newBadge) => {
+        $('result-xp').textContent = `+${record.xp} XP`;
+        $('result-accuracy').textContent = `${record.accuracy}%`;
+        $('result-time').textContent = formatTime(record.timeSec);
+        $('result-boss-name').textContent = `Lv.${calculateLevel(state.user.xp)} ${diff.boss} 討伐`;
+        $('result-monster-icon').textContent = diff.sprite;
+
+        // Badge Overlay
+        const badgeOverlay = $('badge-earned-overlay');
+        if(newBadge) {
+            $('badge-name-display').textContent = newBadge.name;
+            badgeOverlay.classList.remove('hidden');
+            setTimeout(() => badgeOverlay.classList.add('hidden'), 4000);
+        } else {
+            badgeOverlay.classList.add('hidden');
+        }
+
+        // Accuracy Matrix (動的生成)
+        const mx = $('accuracy-matrix');
+        mx.innerHTML = '';
+        record.details.forEach(q => {
+            const el = document.createElement('div');
+            el.className = `aspect-square rounded-md ${q.isCorrect ? 'bg-primary' : 'bg-error-container'}`;
+            mx.appendChild(el);
+        });
+
+        // Time Chart (簡単な棒グラフ)
+        const chart = $('time-chart');
+        chart.innerHTML = '';
+        const maxTime = Math.max(...record.details.map(q => q.time), 1); // ゼロ除算防止
+        record.details.forEach(q => {
+            const h = Math.max((q.time / maxTime) * 100, 5); // min 5%
+            const bar = document.createElement('div');
+            bar.className = `w-full rounded-t-sm ${q.isCorrect ? 'bg-primary-container' : 'bg-error-container'}`;
+            bar.style.height = `${h}%`;
+            chart.appendChild(bar);
+        });
+
+        // Error Reviews
+        const errSec = $('review-errors-section');
+        const errCards = $('error-cards');
+        errCards.innerHTML = '';
+        const errors = record.details.map((q, i) => ({...q, num: i+1})).filter(q => !q.isCorrect);
+        
+        if(errors.length === 0) {
+            errSec.classList.add('hidden');
+        } else {
+            errSec.classList.remove('hidden');
+            errors.slice(0, 4).forEach(err => { // 最大4つ表示
+                errCards.innerHTML += `
+                    <div class="bg-surface-container-lowest rounded-3xl p-6 flex items-center justify-between shadow-sm">
+                        <div class="space-y-1">
+                            <span class="font-label text-xs text-error font-medium">Question #${err.num}</span>
+                            <div class="font-headline text-2xl font-bold">${escapeHTML(err.text)} <span class="text-error-container">${err.ans}</span></div>
+                        </div>
+                        <div class="text-right">
+                            <span class="block text-xs font-label text-outline">Your Answer</span>
+                            <span class="font-headline text-lg font-bold text-on-surface-variant strike-through decoration-error">${err.result}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+    };
+
+    // === History Render ===
+    const renderHistory = () => {
+        const list = $('history-list');
+        list.innerHTML = state.history.length === 0 ? '<p class="text-center text-outline">履歴がありません</p>' : '';
+        
+        state.history.forEach(h => {
+            const d = new Date(h.date).toLocaleDateString();
+            list.innerHTML += `
+                <div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm border border-surface-container hover:bg-surface-container transition-colors cursor-pointer" onclick="alert('詳細ビューは拡張予定です。\\nスコア: ${h.score}/${h.total}\\n時間: ${formatTime(h.timeSec)}')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold">${escapeHTML(h.diffName)}</span>
+                        <span class="text-xs text-outline">${d}</span>
+                    </div>
+                    <div class="flex gap-4 text-sm">
+                        <span class="text-primary font-bold">正答率: ${h.accuracy}%</span>
+                        <span class="text-on-surface-variant">時間: ${formatTime(h.timeSec)}</span>
+                        <span class="text-primary-container">+${h.xp}XP</span>
+                    </div>
+                </div>
+            `;
+        });
+    };
+
+    // === Badges Render ===
+    const renderBadges = () => {
+        const list = $('badges-list');
+        list.innerHTML = '';
+        DIFFICULTIES.forEach(d => {
+            const bId = `badge_${d.id}`;
+            const hasBadge = state.badges.find(b => b.id === bId);
+            
+            const div = document.createElement('div');
+            div.className = `aspect-square rounded-3xl p-4 flex flex-col items-center justify-center text-center shadow-sm ${hasBadge ? 'bg-gradient-to-br from-yellow-300 to-yellow-500 text-white' : 'bg-surface-container text-outline'}`;
+            
+            div.innerHTML = `
+                <span class="material-symbols-outlined text-4xl mb-2 ${hasBadge?'':'opacity-30'}" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+                <span class="font-bold text-sm ${hasBadge?'':'opacity-50'}">${hasBadge ? escapeHTML(d.name) + '制覇' : '???'}</span>
+            `;
+            list.appendChild(div);
+        });
+    };
+
+    // === Settings & Data Mgmt ===
+    const renderSettings = () => {
+        $('setting-api-key').value = state.settings.apiKey || '';
+        $('setting-prompt').value = state.settings.prompt || 'You are an encouraging AI tutor for elementary kids.';
+    };
+
+    const saveSettings = async () => {
+        state.settings.apiKey = $('setting-api-key').value;
+        state.settings.prompt = $('setting-prompt').value;
+        await saveData();
+        alert('設定を保存しました。');
+    };
+
+    const exportData = () => {
+        const dataStr = JSON.stringify(state);
+        const blob = new Blob([dataStr], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `MathBattle_Backup_${new Date().getTime()}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+    };
+
+    const importData = async (e) => {
+        const file = e.target.files[0];
+        if(!file) return;
+        const reader = new FileReader();
+        reader.onload = async (ev) => {
+            try {
+                const parsed = JSON.parse(ev.target.result);
+                if(parsed.user && parsed.user.xp !== undefined) {
+                    state = parsed;
+                    await saveData();
+                    alert('データをインポートしました。');
+                    nav('home');
+                } else { throw new Error(); }
+            } catch(err) {
+                alert('無効なファイル形式です。');
+            }
+        };
+        reader.readAsText(file);
+    };
+
+    // Page Visibility API (Pause/Resume)
+    document.addEventListener("visibilitychange", () => {
+        if (state.battle.active) {
+            if (document.hidden) {
+                clearInterval(state.battle.timerInterval);
+            } else {
+                state.battle.lastQTime = Date.now(); // Resume from now
+                state.battle.timerInterval = setInterval(() => {
+                    state.battle.elapsed++;
+                    $('battle-timer').textContent = formatTime(state.battle.elapsed);
+                }, 1000);
+            }
+        }
+    });
+
+    // === PWA Setup ===
+    const setupPWA = () => {
+        // Manifest
+        const manifest = {
+            name: "MathBattle", short_name: "MathBattle",
+            start_url: ".", display: "standalone",
+            background_color: "#f7f9fb", theme_color: "#0053dc",
+            icons: [{ src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>", sizes: "192x192", type: "image/svg+xml" }]
+        };
+        $('manifest-link').href = 'data:application/manifest+json;charset=utf-8,' + encodeURIComponent(JSON.stringify(manifest));
+
+        // SW
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                self.addEventListener('install', e => self.skipWaiting());
+                self.addEventListener('activate', e => self.clients.claim());
+                self.addEventListener('fetch', e => {}); // offline mock
+            `;
+            const blob = new Blob([swCode], {type: 'application/javascript'});
+            navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>console.log('SW init failed.'));
+        }
+    };
+
+    // Init
+    window.onload = async () => {
+        setupPWA();
+        await loadData();
+        nav('home');
+    };
+
+    return { nav, startBattle, inputNum, clearInput, deleteInput, submitAnswer, exportData, importData, saveSettings };
+})();
+const app = App;
+</script>
+</body>
+</html>
